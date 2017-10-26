@@ -14,14 +14,14 @@ protocol NewPostViewControllerDelegate: class {
     func newPostViewControllerDidCancel(_ controller:
         NewPostViewController)
     func newPostViewController(_ controller: NewPostViewController,
-                                  didFinishAdding item: Post)
+                                  didFinishAdding post: Post)
     func newPostViewController(_ controller: NewPostViewController,
-                                  didFinishEditing item: Post)
+                                  didFinishEditing post: Post)
 }
 
 class NewPostViewController: UIViewController {
     
-    var newTitle = ""
+    var newTitle = "my new post"
     var newImage = UIImage()
     var newContent = ""
     var newDate = Date()
@@ -44,7 +44,8 @@ class NewPostViewController: UIViewController {
         
         let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage, createdBy: "MEEE", dateCreated: newDate)
         
-        
+        print("a22")
+        delegate?.newPostViewController(self, didFinishAdding: newPost)
         
         //save to datamodel
         dismiss(animated: true, completion: nil)

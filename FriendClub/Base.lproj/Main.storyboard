@@ -110,7 +110,7 @@
                     <navigationItem key="navigationItem" id="3B2-Ha-idk">
                         <barButtonItem key="rightBarButtonItem" title="New Post" id="bDi-df-TnF">
                             <connections>
-                                <segue destination="bBA-Ae-QVf" kind="show" id="nkb-bp-LGC"/>
+                                <segue destination="bBA-Ae-QVf" kind="show" identifier="addNewPostSegue" id="nkb-bp-LGC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

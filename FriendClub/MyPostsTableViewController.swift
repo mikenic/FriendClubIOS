@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class MyPostsTableViewController: UITableViewController {
+class MyPostsTableViewController: UITableViewController, NewPostViewControllerDelegate {
     
     var myPosts:[Post] = []
 
@@ -54,51 +54,63 @@ class MyPostsTableViewController: UITableViewController {
         return cell
     }
     
+    
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "addNewItemSegue" {
-//            let navigationController =
-//                segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as!
-//            ItemDetailViewController
-//            controller.delegate = self
-//            controller.creatureCategory = category
-//        } else if segue.identifier == "editItemSegue" {
-//            let navigationController =
-//                segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as!
-//            ItemDetailViewController
-//            controller.delegate = self
-//            controller.creatureCategory = category
-//            if let indexPath = tableView.indexPath(
-//                for: sender as! UITableViewCell) {
-//                controller.creatureToEdit = creatures[indexPath.row]
-//                controller.title = creatures[indexPath.row].title
-//            }
-//        }
-//    }override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "addNewItemSegue" {
-//            let navigationController =
-//                segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as!
-//            ItemDetailViewController
-//            controller.delegate = self
-//            controller.creatureCategory = category
-//        } else if segue.identifier == "editItemSegue" {
-//            let navigationController =
-//                segue.destination as! UINavigationController
-//            let controller = navigationController.topViewController as!
-//            ItemDetailViewController
-//            controller.delegate = self
-//            controller.creatureCategory = category
-//            if let indexPath = tableView.indexPath(
-//                for: sender as! UITableViewCell) {
-//                controller.creatureToEdit = creatures[indexPath.row]
-//                controller.title = creatures[indexPath.row].title
-//            }
-//        }
+        if segue.identifier == "addNewPostSegue" {
+            
+            print("setting delegate")
+            let navigationController =
+                segue.destination as! UINavigationController
+            let controller = navigationController.topViewController as!
+            NewPostViewController
+            controller.delegate = self
+            print("..set")
+            //controller.creatureCategory = category
+        } else if segue.identifier == "editItemSegue" {
+    //        let navigationController =
+    //            segue.destination as! UINavigationController
+    //        let controller = navigationController.topViewController as!
+    //        ItemDetailViewController
+    //        controller.delegate = self
+    //        controller.creatureCategory = category
+    //        if let indexPath = tableView.indexPath(
+    //            for: sender as! UITableViewCell) {
+    //            controller.creatureToEdit = creatures[indexPath.row]
+    //            controller.title = creatures[indexPath.row].title
+    //        }
+        }
     }
+    
+       
+    func newPostViewController(_ controller: NewPostViewController, didFinishAdding post: Post) {
+        //myPosts.append(post)
+        
+        
+        let newRowIndex = myPosts.count
+        myPosts.append(post)
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        print("made it here to adding")
+        
+    }
+        
+    
+    func newPostViewController(_ controller: NewPostViewController, didFinishEditing post: Post) {
+        ///
+    }
+    
+    
+        
+    func newPostViewControllerDidCancel(_ controller: NewPostViewController) {
+            
+        }
+        
+
+    
     
     
     
