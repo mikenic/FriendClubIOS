@@ -13,8 +13,6 @@ class WelcomeViewController: UIViewController {
 
     var dataModel: DataModel!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         generateTestPosts()
