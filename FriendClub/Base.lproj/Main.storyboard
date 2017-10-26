@@ -188,16 +188,16 @@
             </objects>
             <point key="canvasLocation" x="3788" y="116.49175412293854"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Friends Table View Controller-->
         <scene sceneID="TKb-XS-EgE">
             <objects>
-                <tableViewController id="tBr-9V-3pt" sceneMemberID="viewController">
+                <tableViewController id="tBr-9V-3pt" customClass="FriendsTableViewController" customModule="FriendClub" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="32" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xe5-7E-hrn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Q1F-m0-TP6" rowHeight="32" style="IBUITableViewCellStyleDefault" id="fOl-tM-gEY">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" textLabel="Q1F-m0-TP6" rowHeight="32" style="IBUITableViewCellStyleDefault" id="fOl-tM-gEY">
                                 <rect key="frame" x="0.0" y="28" width="375" height="32"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fOl-tM-gEY" id="O6V-5I-Wvu">
@@ -229,10 +229,10 @@
             </objects>
             <point key="canvasLocation" x="3788" y="850.52473763118451"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Friend Tab Bar-->
         <scene sceneID="6th-OG-jgI">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="dch-bH-gcC" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="dch-bH-gcC" customClass="FriendTabBar" customModule="FriendClub" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="8Gf-GO-XvE">
                         <autoresizingMask key="autoresizingMask"/>

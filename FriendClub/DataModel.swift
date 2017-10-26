@@ -12,6 +12,7 @@ import Foundation
 
 class DataModel {
     var postList: [Post] = []
+    var friendList: [Friend] = []
     
     init() {
     }
@@ -21,6 +22,10 @@ class DataModel {
     
     func addPost(newPost:Post) {
             postList.append(newPost)
+    }
+    
+    func addFriend(newFriend:Friend) {
+        friendList.append(newFriend)
     }
     
 }

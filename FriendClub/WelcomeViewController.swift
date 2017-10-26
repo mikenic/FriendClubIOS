@@ -18,6 +18,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         generateTestPosts()
+        generateTestFriend()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +35,13 @@ class WelcomeViewController: UIViewController {
                            createdBy: "jimi@hendrix.com", dateCreated: date)
         
         dataModel.addPost(newPost: newPost)
+    }
+    
+    func generateTestFriend() {
+        let avatarImage = UIImage()
+        let newFriend = Friend(firstName: "john", lastName: "smith", email: "js@gmail.com", avatar: avatarImage)
+        
+        dataModel.addFriend(newFriend: newFriend)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

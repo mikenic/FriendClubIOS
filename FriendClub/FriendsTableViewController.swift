@@ -1,5 +1,5 @@
 //
-//  NewsFeedTableViewController.swift
+//  FriendsTableViewController.swift
 //  FriendClub
 //
 //  Created by vm mac on 2017-10-25.
@@ -8,21 +8,21 @@
 
 import UIKit
 
-class NewsFeedTableViewController: UITableViewController {
+class FriendsTableViewController: UITableViewController {
+
     
-    var posts: [Post] = []
+    var friends: [Friend] = []
     var dataModel:DataModel!
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        posts .append(contentsOf: dataModel.postList)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        //friends.append(contentsOf: dataModel.friendList)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,22 +37,25 @@ class NewsFeedTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return dataModel.postList.count
+        return friends.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsFeedItem", for: indexPath)
-
-///            let cell = tableView.dequeueReusableCell(
-   //             withIdentifier: "CreatureListItem", for: indexPath)
-            let item = posts[indexPath.row]
-            let label = cell.viewWithTag(1000) as! UILabel //1000 = title
-            label.text = item.title
-            
-            return cell
-
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
+        
+        ///            let cell = tableView.dequeueReusableCell(
+        //             withIdentifier: "CreatureListItem", for: indexPath)
+        let item = friends[indexPath.row]
+       
+        let label = cell.textLabel
+        // let label = cell.viewWithTag(1000) as! UILabel //1000 = title
+        label?.text = item.firstName
+        
+        return cell
+        
+        
     }
     
 
