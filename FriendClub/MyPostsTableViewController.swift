@@ -12,8 +12,10 @@ import CoreLocation
 class MyPostsTableViewController: UITableViewController, NewPostViewControllerDelegate {
     
     var myPosts:[Post] = []
+    var currentUser:Friend!
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         let newLocation = CLLocation()
         let newDate = Date()
@@ -50,6 +52,8 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         let item = myPosts[indexPath.row]
         let label = cell.viewWithTag(1000) as! UILabel //1000 = title
         label.text = item.title
+        let contentText = cell.viewWithTag(2000) as!UITextView
+        contentText.text = item.content
         
         return cell
     }
@@ -111,7 +115,9 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         
 
     
-    
+    func getCurrentUser() -> Friend {
+        return currentUser!
+    }
     
     
     

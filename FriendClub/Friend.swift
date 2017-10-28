@@ -22,4 +22,7 @@ class Friend  {
         self.email = email
         self.avatar = avatar
     }
+    
+    
+    
 }

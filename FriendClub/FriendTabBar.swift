@@ -73,6 +73,24 @@ class FriendTabBar: UITabBarController {
         }
         else if item.tag == 2 {
             print("tag was 2")
+            if self.selectedIndex == 0 {
+                let tabBarController = tabBar.delegate
+                    as! UITabBarController
+                let destinationNavigationController =
+                    tabBarController.viewControllers?[2]
+                        as! UINavigationController
+                let destinationController =
+                    destinationNavigationController.topViewController as!
+                MyPostsTableViewController
+                destinationController.currentUser =
+                    ((tabBarController.viewControllers?[0] as!
+                        UINavigationController).topViewController
+                        as!NewsFeedTableViewController)
+                        .dataModel.currentUser
+            }
+            else if self.selectedIndex == 1 {
+            }
+
         }
     }
 

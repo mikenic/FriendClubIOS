@@ -1,30 +1,31 @@
 //
-//  FriendsTableViewController.swift
+//  FriendProfileTableViewController.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by vm mac on 2017-10-27.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
 
 import UIKit
 
-class FriendsTableViewController: UITableViewController {
-
+class FriendProfileTableViewController: UITableViewController {
     
-    var friends: [Friend] = []
-    var selectedFriend:Friend! ///might not exist .!!!
-    var dataModel:DataModel!
-    var profileController:FriendProfileTableViewController!
+    var currentFriend:Friend!
+    
+    
+    
+    @IBAction func backButtonPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        //friends.append(contentsOf: dataModel.friendList)
+        
+        let avatarImage = UIImage()
+//        let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
+//        currentFriend = newFriend
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,53 +36,27 @@ class FriendsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
+
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return friends.count
+
+        return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
-        
-        ///            let cell = tableView.dequeueReusableCell(
-        //             withIdentifier: "CreatureListItem", for: indexPath)
-        let item = friends[indexPath.row]
-       
-        let label = cell.textLabel
-        // let label = cell.viewWithTag(1000) as! UILabel //1000 = title
-        label?.text = item.firstName
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
+
+
+        let friendNameText = cell.viewWithTag(1000) as!UILabel
+        friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
         
         return cell
-        
-        
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedFriend = friends[indexPath.row]
-        profileController.currentFriend = selectedFriend
-        print(friends[indexPath.row].firstName + "was clicked")
-    }
-    
+ 
 
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        print("preparing for segue")
-        
-        let navigationController =
-            segue.destination as! UINavigationController
-        let controller = navigationController.topViewController as!
-        FriendProfileTableViewController
-        //controller.currentFriend = selectedFriend
-        
-        profileController = controller
-    }
-    
-    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

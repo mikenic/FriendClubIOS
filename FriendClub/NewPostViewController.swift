@@ -17,6 +17,7 @@ protocol NewPostViewControllerDelegate: class {
                                   didFinishAdding post: Post)
     func newPostViewController(_ controller: NewPostViewController,
                                   didFinishEditing post: Post)
+    func getCurrentUser()->Friend
 }
 
 class NewPostViewController: UIViewController {
@@ -42,18 +43,22 @@ class NewPostViewController: UIViewController {
     
     @IBAction func saveBtnClicked(_ sender: Any) {
         
-        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage, createdBy: "MEEE", dateCreated: newDate)
         
-        print("a22")
+        newTitle = titleText.text!
+        //newImage = getCurrentImage()
+        if let newText = contentText.text{
+            newContent = newText
+        }
+        newDate = Date()///must be editable
+        newLocation = CLLocation()
+        
+        let user = (delegate?.getCurrentUser())!
+        
+        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage, createdBy: user.email, dateCreated: newDate)
+        
+        
         delegate?.newPostViewController(self, didFinishAdding: newPost)
-        
-        //save to datamodel
         dismiss(animated: true, completion: nil)
-        
-        
-        
-        
-        
         
     }
     
