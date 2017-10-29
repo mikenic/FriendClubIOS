@@ -23,7 +23,7 @@ protocol NewPostViewControllerDelegate: class {
 class NewPostViewController: UIViewController {
     
     var newTitle = "my new post"
-    var newImage = UIImage()
+    var newImage: UIImage?
     var newContent = ""
     var newDate = Date()
     var newLocation = CLLocation()
@@ -38,6 +38,8 @@ class NewPostViewController: UIViewController {
     
     
     @IBAction func changeImageBtnClicked(_ sender: Any) {
+        print("btn clicked")
+        pickPhoto()
     }
     
     
@@ -54,7 +56,7 @@ class NewPostViewController: UIViewController {
         
         let user = (delegate?.getCurrentUser())!
         
-        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage, createdBy: user.email, dateCreated: newDate)
+        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage!, createdBy: user.email, dateCreated: newDate)
         
         
         delegate?.newPostViewController(self, didFinishAdding: newPost)
@@ -76,4 +78,70 @@ class NewPostViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }    
 
+}
+
+
+extension NewPostViewController: UIImagePickerControllerDelegate,
+UINavigationControllerDelegate {
+    func pickPhoto() {
+        if true || UIImagePickerController.isSourceTypeAvailable(.camera) {
+            showPhotoMenu()
+        } else {
+            choosePhotoFromLibrary()
+        }
+    }
+    
+    func showPhotoMenu() {
+        let alertController = UIAlertController(title: nil, message: nil,
+                                                preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        let takePhotoAction =
+            UIAlertAction(title: "Take Photo", style: .default,
+                          handler: { _ in self.takePhotoWithCamera() })
+        alertController.addAction(takePhotoAction)
+        let chooseFromLibraryAction =
+            UIAlertAction(title: "Choose From Library",
+                          style: .default, handler: { _ in self
+                            .choosePhotoFromLibrary() })
+        alertController.addAction(chooseFromLibraryAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func choosePhotoFromLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func takePhotoWithCamera() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .camera
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        newImage = UIImage()
+        newImage? =
+            (info[UIImagePickerControllerEditedImage] as? UIImage)!
+        
+        if let theImage = newImage {
+            //show(image: theImage, sender: <#Any?#>)
+        }
+        
+        //tableView.reloadData()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }
