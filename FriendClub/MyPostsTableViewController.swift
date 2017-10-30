@@ -52,26 +52,22 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         let item = myPosts[indexPath.row]
         let label = cell.viewWithTag(1000) as! UILabel //1000 = title
         label.text = item.title
-        let contentText = cell.viewWithTag(2000) as!UITextView
+        let contentText = cell.viewWithTag(2000) as!UITextView //2000 = text content
         contentText.text = item.content
+        
+        let postImage = cell.viewWithTag(3000) as!UIImageView //2000 = text content
+        postImage.image = item.image
         
         return cell
     }
     
-    
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addNewPostSegue" {
-            
-            print("setting delegate")
             let navigationController =
                 segue.destination as! UINavigationController
             let controller = navigationController.topViewController as!
-            NewPostViewController
+                NewPostViewController
             controller.delegate = self
-            print("..set")
-            //controller.creatureCategory = category
         } else if segue.identifier == "editItemSegue" {
     //        let navigationController =
     //            segue.destination as! UINavigationController
@@ -86,55 +82,26 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
     //        }
         }
     }
-    
        
     func newPostViewController(_ controller: NewPostViewController, didFinishAdding post: Post) {
-        //myPosts.append(post)
-        
-        
         let newRowIndex = myPosts.count
         myPosts.append(post)
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
-        
-        print("made it here to adding")
-        
     }
-        
     
     func newPostViewController(_ controller: NewPostViewController, didFinishEditing post: Post) {
         ///
     }
-    
-    
         
     func newPostViewControllerDidCancel(_ controller: NewPostViewController) {
             
-        }
-        
-
+    }
     
     func getCurrentUser() -> Friend {
         return currentUser!
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     

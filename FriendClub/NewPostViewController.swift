@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 
-
 protocol NewPostViewControllerDelegate: class {
     func newPostViewControllerDidCancel(_ controller:
         NewPostViewController)
@@ -28,36 +27,25 @@ class NewPostViewController: UIViewController {
     var newDate = Date()
     var newLocation = CLLocation()
     weak var delegate: NewPostViewControllerDelegate?
-
-    
     
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var contentText: UITextView!
     
-    
-    
     @IBAction func changeImageBtnClicked(_ sender: Any) {
-        print("btn clicked")
         pickPhoto()
     }
     
-    
     @IBAction func saveBtnClicked(_ sender: Any) {
-        
-        
         newTitle = titleText.text!
-        //newImage = getCurrentImage()
         if let newText = contentText.text{
             newContent = newText
         }
         newDate = Date()///must be editable
         newLocation = CLLocation()
-        
         let user = (delegate?.getCurrentUser())!
         
-        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: newImage!, createdBy: user.email, dateCreated: newDate)
-        
+        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: postImage.image!, createdBy: user.email, dateCreated: newDate)
         
         delegate?.newPostViewController(self, didFinishAdding: newPost)
         dismiss(animated: true, completion: nil)
@@ -65,19 +53,23 @@ class NewPostViewController: UIViewController {
     }
     
     @IBAction func cancelBtnClicked(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }    
-
+    }
+    
+    func show(image: UIImage) {
+        postImage.image = image
+        postImage.isHidden = false
+        //postImage.frame = CGRect(x: 10, y: 10, width: 260, height: 260)
+    }
 }
 
 
@@ -128,16 +120,14 @@ UINavigationControllerDelegate {
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [String : Any]) {
-        
         newImage = UIImage()
         newImage? =
             (info[UIImagePickerControllerEditedImage] as? UIImage)!
         
         if let theImage = newImage {
-            //show(image: theImage, sender: <#Any?#>)
+            show(image: theImage)
         }
         
-        //tableView.reloadData()
         dismiss(animated: true, completion: nil)
     }
     
