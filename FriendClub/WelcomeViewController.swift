@@ -19,6 +19,8 @@ class WelcomeViewController: UIViewController {
         //dataModel.generateTestFriend()
         dataModel.loadData(delegate:(UIApplication.shared.delegate)
             as! AppDelegate)
+        
+        dataModel.generateTestPosts()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,16 +28,16 @@ class WelcomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func generateTestPosts() {
-        let location = CLLocation()
-        let image = UIImage()
-        let date =  Date()
-        let newPost = Post(title: "happy day", content: "what a happy day",
-                           location: location, image: image,
-                           createdBy: "jimi@hendrix.com", dateCreated: date)
-        
-        dataModel.addPost(newPost: newPost)
-    }
+//    func generateTestPosts() {
+//        let location = CLLocation()
+//        let image = UIImage()
+//        let date =  Date()
+//        let newPost = Post(title: "happy day", content: "what a happy day",
+//                           location: location, image: image,
+//                           createdBy: "jimi@hendrix.com", dateCreated: date)
+//        
+//        dataModel.addPost(newPost: newPost)
+//    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

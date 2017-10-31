@@ -9,16 +9,15 @@
 import Foundation
 import UIKit
 import CoreData
+import CoreLocation
 
 class DataModel {
     var postList: [Post] = []
     var friendList: [Friend] = []
     var currentUser: Friend!
     
-    
     init() {
        //addUserToFriends()
-        
     }
     
     func addUserToFriends() {
@@ -44,39 +43,12 @@ class DataModel {
             importFromCoreData(cdFriendList: cdFriendList,
                                context: managedObjectContext)
             if(friendList.isEmpty != true) {
-                //print(creatureList[0].title)
+                //
             }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        
-        
-        
-        
-        
-        
-//
-//        let postFetchRequest =
-//            NSFetchRequest<CD_Post>(entityName: "CD_Post")
-//        do {
-//            cdPostList = try managedObjectContext.fetch(postFetchRequest)
-//            print("was able to fetch")
-//            importFromCoreData(cdPostList: cdPostList,
-//                               context: managedObjectContext)
-//            if(postList.isEmpty != true) {
-//                //print(creatureList[0].title)
-//            }
-//        } catch let error as NSError {
-//            print("Could not fetch posts. \(error), \(error.userInfo)")
-//        }
-        
-        
-        
     }
-    
-    
-    
-    
     
     func importFromCoreData(cdFriendList: [NSManagedObject],
                             context: NSManagedObjectContext) {
@@ -99,7 +71,6 @@ class DataModel {
                 }
                 
                 let newFriend:Friend = Friend(firstName: ($0 as! CD_Friend).firstName!, lastName: ($0 as! CD_Friend).lastName!, email: ($0 as! CD_Friend).email!, avatar: friendAvatar!)
-                
                 friendList.append(newFriend)
                 
                 let fetchRequest =
@@ -128,23 +99,15 @@ class DataModel {
         appDelegate.saveContext()
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    func addPost(newPost:Post) {
-            postList.append(newPost)
+    func addPost(newPost:Post, friend: Friend) {
+        postList.append(newPost)
+        addPostToFriend(newPost: newPost,friend: friend)
     }
     
     func addFriend(newFriend:Friend) {
         friendList.append(newFriend)
         addNewFriendToCD(newFriend: newFriend)
     }
-    
     
     func deleteAllData() {
         let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
@@ -166,25 +129,61 @@ class DataModel {
         }
     }
     
-    
-    
-    
     func generateTestFriend() {
-        
         addUserToFriends()
         
         let avatarImage = UIImage()
         let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
         addFriend(newFriend: newFriend)
-        
         let newFriend2 = Friend(firstName: "joe", lastName: "rogan", email: "joe@jre.com", avatar: avatarImage)
         addFriend(newFriend: newFriend2)
-        
         let newFriend3 = Friend(firstName: "jane", lastName: "smith", email: "janes@gmail.com", avatar: avatarImage)
         addFriend(newFriend: newFriend3)
-        
         let newFriend4 = Friend(firstName: "les", lastName: "claypool", email: "les@gmail.com", avatar: avatarImage)
         addFriend(newFriend: newFriend4)
+        
+        //generateTestPosts()
     }
+    
+    func generateTestPosts() {
+        let location = CLLocation()
+        let image = UIImage()
+        let date =  Date()
+        let newPost = Post(title: "happy day", content: "what a happy day",
+                           location: location, image: image,
+                           createdBy: "johns@gmail.com", dateCreated: date)
+        
+        addPost(newPost: newPost, friend: friendList[1])
+    }
+    
+    
+    
+    
+    
+    
+ func addPostToFriend(newPost: Post,
+                                        friend: Friend) {
+        let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
+        let context = appDelegate.persistentContainer
+        var managedObjectContext: NSManagedObjectContext!
+        managedObjectContext = context.viewContext
+        let fetchRequest = NSFetchRequest<CD_Friend>(entityName: "CD_Friend")
+        fetchRequest.predicate = NSPredicate.init(format: "email = %@",
+                                                  friend.email)
+        let friendToAddPostTo = try! managedObjectContext.fetch(fetchRequest)
+        let newCDPost = CD_Post(context: managedObjectContext)
+        newCDPost.copyPost(newPost: newPost)
+        newCDPost.relationship = friendToAddPostTo[0]
+        friendToAddPostTo[0].addToRelationship(newCDPost)
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            print("could not save after adding item to province")
+        }
+    }
+    
+    
+    
     
 }
