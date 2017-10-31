@@ -45,6 +45,8 @@ class FriendsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
         
         ///            let cell = tableView.dequeueReusableCell(
@@ -63,6 +65,7 @@ class FriendsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedFriend = friends[indexPath.row]
         profileController.currentFriend = selectedFriend
+        profileController.posts = selectedFriend.posts
         print(friends[indexPath.row].firstName + "was clicked")
     }
     

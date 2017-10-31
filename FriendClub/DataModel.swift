@@ -176,4 +176,8 @@ class DataModel {
             print("could not save after adding item to province")
         }
     }
+    
+//    func getPosts(friend: Friend) -> {
+//        
+//    }
 }

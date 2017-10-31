@@ -10,6 +10,7 @@ import UIKit
 
 class FriendProfileTableViewController: UITableViewController {
     var currentFriend:Friend!
+    var posts:[Post] = []
     
     @IBAction func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -30,21 +31,31 @@ class FriendProfileTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
 
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return 1
+        if(section == 0){
+            return 1
+        } else {
+            return currentFriend.posts.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
-
-        let friendNameText = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
-        friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
+        if(indexPath.section == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
+            let friendNameText = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
+            friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FriendPost", for: indexPath)
+            let postTitle = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
+            postTitle.text = currentFriend.posts[indexPath.row].title
+            return cell
+        }
         
-        return cell
+        
     }
  
 
