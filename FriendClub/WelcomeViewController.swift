@@ -16,10 +16,12 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //generateTestPosts()
-        //dataModel.generateTestFriend()
+        dataModel.generateTestFriend()
         dataModel.loadData(delegate:(UIApplication.shared.delegate)
             as! AppDelegate)
-        dataModel.addUserToFriends()
+        if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
+        //dataModel.addUserToFriends()
+        
         //dataModel.generateTestPosts()
     }
 

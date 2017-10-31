@@ -46,11 +46,28 @@ class FriendProfileTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
             let friendNameText = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
             friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
+            
+            let friendAvatar = cell.viewWithTag(2000) as! UIImageView
+            friendAvatar.image = currentFriend.avatar
+            
+            let friendEmail = cell.viewWithTag(3000) as! UILabel
+            friendEmail.text = currentFriend.email
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendPost", for: indexPath)
-            let postTitle = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
+            let postTitle = cell.viewWithTag(1000) as!UILabel // 1000 = post title
             postTitle.text = currentFriend.posts[indexPath.row].title
+            
+            let postImage = cell.viewWithTag(2000) as! UIImageView
+            postImage.image = currentFriend.posts[indexPath.row].image
+            
+            let postContent = cell.viewWithTag(3000) as! UITextView
+            postContent.text = currentFriend.posts[indexPath.row].content
+            
+            let postDate = cell.viewWithTag(4000) as! UILabel
+            postDate.text = currentFriend.posts[indexPath.row].dateCreated.description
+            
             return cell
         }
     }

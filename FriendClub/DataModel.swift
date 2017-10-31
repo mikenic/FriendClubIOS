@@ -23,7 +23,7 @@ class DataModel {
     func addUserToFriends() {
         let tmpPic = UIImage()
         let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic)
-        //addFriend(newFriend: thisUser) // add this user as the first friend
+        addFriend(newFriend: thisUser) // add this user as the first friend
         currentUser = friendList[0]
     }
     

@@ -59,8 +59,11 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         let contentText = cell.viewWithTag(2000) as!UITextView //2000 = text content
         contentText.text = item.content
         
-        let postImage = cell.viewWithTag(3000) as!UIImageView //2000 = text content
+        let postImage = cell.viewWithTag(3000) as!UIImageView //3000 = post image
         postImage.image = item.image
+        
+        let postDate = cell.viewWithTag(4000) as! UILabel //4000 = post date
+        postDate.text = item.dateCreated.description
         
         return cell
     }
