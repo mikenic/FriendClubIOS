@@ -18,7 +18,7 @@ class FriendProfileTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let avatarImage = UIImage()
+        //let avatarImage = UIImage()
         
     }
 
@@ -30,7 +30,6 @@ class FriendProfileTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-
         return 2
     }
 
@@ -54,8 +53,6 @@ class FriendProfileTableViewController: UITableViewController {
             postTitle.text = currentFriend.posts[indexPath.row].title
             return cell
         }
-        
-        
     }
  
 

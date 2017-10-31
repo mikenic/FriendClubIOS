@@ -46,7 +46,6 @@ class NewPostViewController: UIViewController {
         let user = (delegate?.getCurrentUser())!
         let tmpImage = UIImage()
         
-        
         let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: tmpImage, createdBy: user.email, dateCreated: newDate)
         
         delegate?.newPostViewController(self, didFinishAdding: newPost)
