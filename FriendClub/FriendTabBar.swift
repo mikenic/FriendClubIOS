@@ -87,6 +87,11 @@ class FriendTabBar: UITabBarController {
                         UINavigationController).topViewController
                         as!NewsFeedTableViewController)
                         .dataModel.currentUser
+                destinationController.dataModel =
+                    ((tabBarController.viewControllers?[0] as!
+                        UINavigationController).topViewController
+                        as!NewsFeedTableViewController)
+                        .dataModel
             }
             else if self.selectedIndex == 1 {
             }

@@ -23,7 +23,7 @@ class DataModel {
     func addUserToFriends() {
         let tmpPic = UIImage()
         let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic)
-        addFriend(newFriend: thisUser) // add this user as the first friend
+        //addFriend(newFriend: thisUser) // add this user as the first friend
         currentUser = friendList[0]
     }
     
@@ -156,13 +156,7 @@ class DataModel {
         addPost(newPost: newPost, friend: friendList[1])
     }
     
-    
-    
-    
-    
-    
- func addPostToFriend(newPost: Post,
-                                        friend: Friend) {
+    func addPostToFriend(newPost: Post, friend: Friend) {
         let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
         let context = appDelegate.persistentContainer
         var managedObjectContext: NSManagedObjectContext!
@@ -182,8 +176,4 @@ class DataModel {
             print("could not save after adding item to province")
         }
     }
-    
-    
-    
-    
 }

@@ -44,8 +44,10 @@ class NewPostViewController: UIViewController {
         newDate = Date()///must be editable
         newLocation = CLLocation()
         let user = (delegate?.getCurrentUser())!
+        let tmpImage = UIImage()
         
-        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: postImage.image!, createdBy: user.email, dateCreated: newDate)
+        
+        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: tmpImage, createdBy: user.email, dateCreated: newDate)
         
         delegate?.newPostViewController(self, didFinishAdding: newPost)
         dismiss(animated: true, completion: nil)

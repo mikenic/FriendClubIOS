@@ -13,16 +13,20 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
     
     var myPosts:[Post] = []
     var currentUser:Friend!
+    var dataModel: DataModel!
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        currentUser = dataModel.currentUser
         let newLocation = CLLocation()
         let newDate = Date()
         let myAvatar = UIImage()
         
-        let newPost = Post(title: "my post", content: "lalalalala", location: newLocation, image: myAvatar, createdBy: "Myself", dateCreated: newDate)
-        myPosts.append(newPost)
+        currentUser.posts.map({ myPosts.append($0)})
+        
+//        let newPost = Post(title: "my post", content: "lalalalala", location: newLocation, image: myAvatar, createdBy: "Myself", dateCreated: newDate)
+//        myPosts.append(newPost)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -85,6 +89,7 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
        
     func newPostViewController(_ controller: NewPostViewController, didFinishAdding post: Post) {
         let newRowIndex = myPosts.count
+        dataModel.addPost(newPost: post, friend: getCurrentUser())
         myPosts.append(post)
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]

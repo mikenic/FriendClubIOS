@@ -19,8 +19,8 @@ class WelcomeViewController: UIViewController {
         //dataModel.generateTestFriend()
         dataModel.loadData(delegate:(UIApplication.shared.delegate)
             as! AppDelegate)
-        
-        dataModel.generateTestPosts()
+        dataModel.addUserToFriends()
+        //dataModel.generateTestPosts()
     }
 
     override func didReceiveMemoryWarning() {
