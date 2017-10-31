@@ -15,7 +15,10 @@ class WelcomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        generateTestPosts()
+        //generateTestPosts()
+        //dataModel.generateTestFriend()
+        dataModel.loadData(delegate:(UIApplication.shared.delegate)
+            as! AppDelegate)
     }
 
     override func didReceiveMemoryWarning() {

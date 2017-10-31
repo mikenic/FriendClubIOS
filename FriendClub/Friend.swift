@@ -10,11 +10,13 @@ import Foundation
 import UIKit
 
 
-class Friend  {
+class Friend: NSObject  {
     var firstName = ""
     var lastName = ""
     var email = ""
-    var avatar = UIImage()
+    var avatar: UIImage? = nil
+    var posts = [Post]()
+
     
     init(firstName:String, lastName:String, email:String, avatar:UIImage) {
         self.firstName = firstName

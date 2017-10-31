@@ -11,7 +11,7 @@ import CoreLocation
 import UIKit
 
 
-class Post {
+class Post: NSObject {
     var title = ""
     var content = ""
     var location = CLLocation()

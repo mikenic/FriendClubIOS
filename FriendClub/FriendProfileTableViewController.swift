@@ -9,10 +9,7 @@
 import UIKit
 
 class FriendProfileTableViewController: UITableViewController {
-    
     var currentFriend:Friend!
-    
-    
     
     @IBAction func backButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -20,11 +17,7 @@ class FriendProfileTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         let avatarImage = UIImage()
-//        let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
-//        currentFriend = newFriend
         
     }
 
@@ -45,12 +38,10 @@ class FriendProfileTableViewController: UITableViewController {
         return 1
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
 
-
-        let friendNameText = cell.viewWithTag(1000) as!UILabel
+        let friendNameText = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
         friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
         
         return cell
