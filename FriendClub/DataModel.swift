@@ -20,9 +20,10 @@ class DataModel {
        //addUserToFriends()
     }
     
+    //add the app user as the first friend in the list
     func addUserToFriends() {
         let tmpPic = UIImage()
-        let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic)
+        let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic, userId: 0)
         addFriend(newFriend: thisUser) // add this user as the first friend
         currentUser = friendList[0]
     }
@@ -70,7 +71,7 @@ class DataModel {
                     }
                 }
                 
-                let newFriend:Friend = Friend(firstName: ($0 as! CD_Friend).firstName!, lastName: ($0 as! CD_Friend).lastName!, email: ($0 as! CD_Friend).email!, avatar: friendAvatar!)
+                let newFriend:Friend = Friend(firstName: ($0 as! CD_Friend).firstName!, lastName: ($0 as! CD_Friend).lastName!, email: ($0 as! CD_Friend).email!, avatar: friendAvatar!, userId: 0)
                 friendList.append(newFriend)
                 
                 let fetchRequest =
@@ -87,7 +88,7 @@ class DataModel {
     }
     
     func addNewFriendToCD(newFriend: Friend) {
-        friendList.append(newFriend)
+        //friendList.append(newFriend)
         
         let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
         let context = appDelegate.persistentContainer
@@ -110,14 +111,36 @@ class DataModel {
     }
     
     func addJSONFriends(friends: [jsonFriend]) {
-        print("!@!@##!#")
+        print("!@!@##!############")
+        print(friends.count, "Friends inthe list###########")
         friends.map({
             let tmpAvatar = UIImage()
-            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar)
+            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, userId: $0.id!)
             print("adding new jsonFriend")
             addFriend(newFriend: newFriend)
             
         })
+    }
+    
+    func addJSONPosts(posts: [jsonPost]) {
+        posts.map{
+            let tmpPic = UIImage()
+            
+            let postLocation = CLLocation()
+            let postImage = UIImage()
+            let dateCreated = Date()
+            let userId = $0.id!
+            
+            let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, createdBy: userId.description, dateCreated: dateCreated)
+            
+            let author = friendList.map{
+                if($0.userId == userId) {
+                    addPost(newPost: newPost, friend: $0)
+                    print("#################################")
+                    print("added ", newPost.title, " to ", $0.firstName)
+                }
+            }
+        }
     }
     
     func deleteAllData() {
@@ -141,17 +164,17 @@ class DataModel {
     }
     
     func generateTestFriend() {
-        addUserToFriends()
+        //addUserToFriends()
         
-        let avatarImage = UIImage()
-        let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
-        addFriend(newFriend: newFriend)
-        let newFriend2 = Friend(firstName: "joe", lastName: "rogan", email: "joe@jre.com", avatar: avatarImage)
-        addFriend(newFriend: newFriend2)
-        let newFriend3 = Friend(firstName: "jane", lastName: "smith", email: "janes@gmail.com", avatar: avatarImage)
-        addFriend(newFriend: newFriend3)
-        let newFriend4 = Friend(firstName: "les", lastName: "claypool", email: "les@gmail.com", avatar: avatarImage)
-        addFriend(newFriend: newFriend4)
+//        let avatarImage = UIImage()
+//        let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
+//        addFriend(newFriend: newFriend)
+//        let newFriend2 = Friend(firstName: "joe", lastName: "rogan", email: "joe@jre.com", avatar: avatarImage)
+//        addFriend(newFriend: newFriend2)
+//        let newFriend3 = Friend(firstName: "jane", lastName: "smith", email: "janes@gmail.com", avatar: avatarImage)
+//        addFriend(newFriend: newFriend3)
+//        let newFriend4 = Friend(firstName: "les", lastName: "claypool", email: "les@gmail.com", avatar: avatarImage)
+//        addFriend(newFriend: newFriend4)
         
         //generateTestPosts()
     }
@@ -164,7 +187,7 @@ class DataModel {
                            location: location, image: image,
                            createdBy: "johns@gmail.com", dateCreated: date)
         
-        addPost(newPost: newPost, friend: friendList[1])
+        //addPost(newPost: newPost, friend: friendList[1]
     }
     
     func addPostToFriend(newPost: Post, friend: Friend) {
@@ -191,4 +214,5 @@ class DataModel {
 //    func getPosts(friend: Friend) -> {
 //        
 //    }
+
 }

@@ -16,13 +16,14 @@ class Friend: NSObject  {
     var email = ""
     var avatar: UIImage? = nil
     var posts = [Post]()
-
+    var userId: Int?
     
-    init(firstName:String, lastName:String, email:String, avatar:UIImage) {
+    init(firstName:String, lastName:String, email:String, avatar:UIImage, userId:Int) {
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.avatar = avatar
+        self.userId = userId
     }
     
     

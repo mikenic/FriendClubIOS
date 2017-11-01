@@ -17,16 +17,14 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         super.viewDidLoad()
         //generateTestPosts()
         //FcApi.fetchData()
-    
-        
-        
         //dataModel.generateTestFriend()
-        dataModel.loadData(delegate:(UIApplication.shared.delegate)
-            as! AppDelegate)
-        if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
-        
+        //dataModel.loadData(delegate:(UIApplication.shared.delegate)
+          //  as! AppDelegate)
+        // if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
+        dataModel.deleteAllData()
         FcApi.fetchFriends(delegateController: self)
-
+        FcApi.fetchPosts(delegateController: self)
+        
         //dataModel.addUserToFriends()        
         //dataModel.generateTestPosts()
     }
@@ -57,6 +55,10 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     
     func addFriends(friends: [jsonFriend]) {
         dataModel.addJSONFriends(friends: friends)
+    }
+    
+    func addPosts(posts: [jsonPost]) {
+        dataModel.addJSONPosts(posts: posts)
     }
     
     //////////////extention api

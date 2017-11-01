@@ -34,10 +34,26 @@ struct jsonFriend: Decodable {
 struct jsonData: Decodable {
     let data: [jsonFriend]?
 }
+//////
+struct jsonPostData: Decodable {
+    let data: [jsonPost]?
+}
 
+struct jsonPost: Decodable {
+    let id: Int?
+    let title: String?
+    let content: String?
+    let longitude: Double?
+    let latitude: Double?
+    let image: avatar?
+    let created_at: String?
+    let updated_at: String?
+    let user_id: Int?
+}
 
 protocol FcApiProtocol: class {
     func addFriends(friends: [jsonFriend])
+    func addPosts(posts: [jsonPost])
 }
 
 class FcApi {
@@ -75,6 +91,38 @@ class FcApi {
             }
         }.resume()
     }
+    
+    
+    
+    
+    
+    
+    
+    static func fetchPosts(delegateController: FcApiProtocol) {
+        delegate = delegateController
+        let jsonUrlString = "https://friend-club.herokuapp.com/api/v1/posts"
+        guard let url = URL(string: jsonUrlString) else { return }
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            guard let data = data else { return }
+            print("ASASASAS", data)
+            do {
+                
+                print(data)
+                let dataAsString = String(data: data, encoding: .utf8)
+                print(dataAsString)
+                
+                let webDesc = try JSONDecoder().decode(jsonHeader.self, from: data)
+                let postData = try JSONDecoder().decode(jsonPostData.self, from: data)
+                delegate?.addPosts(posts: postData.data!)
+            } catch let jsonErr {
+                print("error serializing json in posts")
+            }
+            }.resume()
+    }
+    
+    
+    
+    
     
     static func fetchMyPosts() {
         
