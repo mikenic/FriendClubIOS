@@ -109,6 +109,17 @@ class DataModel {
         addNewFriendToCD(newFriend: newFriend)
     }
     
+    func addJSONFriends(friends: [jsonFriend]) {
+        print("!@!@##!#")
+        friends.map({
+            let tmpAvatar = UIImage()
+            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar)
+            print("adding new jsonFriend")
+            addFriend(newFriend: newFriend)
+            
+        })
+    }
+    
     func deleteAllData() {
         let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
         let context = appDelegate.persistentContainer

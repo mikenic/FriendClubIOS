@@ -12,6 +12,7 @@
 		6A4D0A241FA6DCD100C07E3E /* CD_Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4D0A201FA6DCD100C07E3E /* CD_Post+CoreDataProperties.swift */; };
 		6A4D0A251FA6DCD100C07E3E /* CD_Friend+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4D0A211FA6DCD100C07E3E /* CD_Friend+CoreDataClass.swift */; };
 		6A4D0A261FA6DCD100C07E3E /* CD_Friend+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A4D0A221FA6DCD100C07E3E /* CD_Friend+CoreDataProperties.swift */; };
+		6AFBB8931FA962430069F1F2 /* FcApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBB8921FA962430069F1F2 /* FcApi.swift */; };
 		84B7DF131FA1716700EE8F1C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B7DF121FA1716700EE8F1C /* AppDelegate.swift */; };
 		84B7DF181FA1716700EE8F1C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84B7DF161FA1716700EE8F1C /* Main.storyboard */; };
 		84B7DF1A1FA1716700EE8F1C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84B7DF191FA1716700EE8F1C /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		6A4D0A201FA6DCD100C07E3E /* CD_Post+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6A4D0A211FA6DCD100C07E3E /* CD_Friend+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Friend+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6A4D0A221FA6DCD100C07E3E /* CD_Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CD_Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6AFBB8921FA962430069F1F2 /* FcApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FcApi.swift; sourceTree = "<group>"; };
 		84B7DF0F1FA1716700EE8F1C /* FriendClub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FriendClub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84B7DF121FA1716700EE8F1C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84B7DF171FA1716700EE8F1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				84B7DF1B1FA1716700EE8F1C /* LaunchScreen.storyboard */,
 				84B7DF1E1FA1716700EE8F1C /* Info.plist */,
 				84B7DF321FA1C2F900EE8F1C /* FriendTabBar.swift */,
+				6AFBB8921FA962430069F1F2 /* FcApi.swift */,
 			);
 			path = FriendClub;
 			sourceTree = "<group>";
@@ -155,6 +158,7 @@
 					84B7DF0E1FA1716700EE8F1C = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 55872CU264;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -195,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AFBB8931FA962430069F1F2 /* FcApi.swift in Sources */,
 				6A4D0A251FA6DCD100C07E3E /* CD_Friend+CoreDataClass.swift in Sources */,
 				6A4D0A241FA6DCD100C07E3E /* CD_Post+CoreDataProperties.swift in Sources */,
 				84B7DF351FA1D12500EE8F1C /* MyPostsTableViewController.swift in Sources */,
@@ -355,7 +360,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikeaubie.FriendClub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -371,7 +377,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikeaubie.FriendClub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

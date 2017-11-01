@@ -9,19 +9,25 @@
 import UIKit
 import CoreLocation
 
-class WelcomeViewController: UIViewController {
+class WelcomeViewController: UIViewController, FcApiProtocol {
 
     var dataModel: DataModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //generateTestPosts()
-        dataModel.generateTestFriend()
+        //FcApi.fetchData()
+    
+        
+        
+        //dataModel.generateTestFriend()
         dataModel.loadData(delegate:(UIApplication.shared.delegate)
             as! AppDelegate)
         if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
-        //dataModel.addUserToFriends()
         
+        FcApi.fetchFriends(delegateController: self)
+
+        //dataModel.addUserToFriends()        
         //dataModel.generateTestPosts()
     }
 
@@ -48,4 +54,31 @@ class WelcomeViewController: UIViewController {
         let newsFeedVC = navVC.topViewController as! NewsFeedTableViewController
         newsFeedVC.dataModel = dataModel
     }
+    
+    func addFriends(friends: [jsonFriend]) {
+        dataModel.addJSONFriends(friends: friends)
+    }
+    
+    //////////////extention api
+    /*
+    func fetchFriends() {
+        let jsonUrlString = "https://friend-club.herokuapp.com/api/v1/my_friends"
+        
+        guard let url = URL(string: jsonUrlString) else { return }
+        
+        print("declare")
+        URLSession.shared.dataTask(with: url) { (data, response, err) in
+            
+            guard let data = data else { return }
+            
+            do {
+                //let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                let newFriend = try JSONDecoder().decode(jsonFriend.self, from: data)
+                
+                print(newFriend)
+            } catch let jsonErr {
+                print("error serializing json in myfriends", jsonErr)
+            }
+        }.resume()
+    }*/
 }
