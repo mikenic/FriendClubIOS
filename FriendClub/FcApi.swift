@@ -54,6 +54,7 @@ struct jsonPost: Decodable {
 protocol FcApiProtocol: class {
     func addFriends(friends: [jsonFriend])
     func addPosts(posts: [jsonPost])
+    func setUser()
 }
 
 class FcApi {
@@ -86,6 +87,10 @@ class FcApi {
                 //let newFriend = try JSONDecoder().decode(jsonFriend.self, from: data)
                 
                 //print(newFriend)
+                
+                delegate?.setUser()
+                
+                
             } catch let jsonErr {
                 print("error serializing json in myfriends")
             }

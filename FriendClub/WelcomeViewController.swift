@@ -23,8 +23,8 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         // if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
         dataModel.deleteAllData()
         FcApi.fetchFriends(delegateController: self)
-        FcApi.fetchPosts(delegateController: self)
-        
+       // FcApi.fetchPosts(delegateController: self)
+//        dataModel.setCurrentUser()
         //dataModel.addUserToFriends()        
         //dataModel.generateTestPosts()
     }
@@ -34,31 +34,31 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         // Dispose of any resources that can be recreated.
     }
     
-//    func generateTestPosts() {
-//        let location = CLLocation()
-//        let image = UIImage()
-//        let date =  Date()
-//        let newPost = Post(title: "happy day", content: "what a happy day",
-//                           location: location, image: image,
-//                           createdBy: "jimi@hendrix.com", dateCreated: date)
-//        
-//        dataModel.addPost(newPost: newPost)
-//    }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let tabbarController = segue.destination as! UITabBarController
         let navVC = tabbarController.viewControllers?[0] as! UINavigationController
         let newsFeedVC = navVC.topViewController as! NewsFeedTableViewController
         newsFeedVC.dataModel = dataModel
+        let navVC2 = tabbarController.viewControllers?[1] as! UINavigationController
+        let friendsVC = navVC2.topViewController as! FriendsTableViewController
+        friendsVC.dataModel = dataModel
+        let navVC3 = tabbarController.viewControllers?[2] as! UINavigationController
+        let myPostsVC = navVC3.topViewController as! MyPostsTableViewController
+        myPostsVC.dataModel = dataModel
     }
     
     func addFriends(friends: [jsonFriend]) {
         dataModel.addJSONFriends(friends: friends)
+        FcApi.fetchPosts(delegateController: self)
     }
     
     func addPosts(posts: [jsonPost]) {
         dataModel.addJSONPosts(posts: posts)
+    }
+    
+    func setUser() {
+        dataModel.setCurrentUser()
     }
     
     //////////////extention api

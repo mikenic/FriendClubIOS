@@ -46,7 +46,7 @@ public class CD_Post: NSManagedObject {
 //        return provinceListItem
 
         let location = CLLocation()
-        let author = "myself"
+        let author = 1
         var postImage = UIImage()
         
         if(self.image != nil) {

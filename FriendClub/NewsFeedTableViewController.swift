@@ -44,7 +44,12 @@ class NewsFeedTableViewController: UITableViewController {
         let item = posts[indexPath.row]
         let label = cell.viewWithTag(1000) as! UILabel //1000 = title
         label.text = item.title
-        
+        let author = cell.viewWithTag(2000) as! UILabel
+        let authorName = dataModel.findFriendWithId(id: item.createdBy).firstName + " " +
+                            dataModel.findFriendWithId(id: item.createdBy).lastName
+        author.text = authorName
+        let content = cell.viewWithTag(3000) as! UITextView
+        content.text = item.content
         return cell
     }
     

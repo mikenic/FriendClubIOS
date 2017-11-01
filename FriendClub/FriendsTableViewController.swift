@@ -18,7 +18,7 @@ class FriendsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        friends.append(contentsOf: dataModel.friendList)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

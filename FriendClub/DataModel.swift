@@ -20,6 +20,9 @@ class DataModel {
        //addUserToFriends()
     }
     
+    func setCurrentUser() {
+        currentUser = friendList[1]
+    }
     //add the app user as the first friend in the list
     func addUserToFriends() {
         let tmpPic = UIImage()
@@ -112,10 +115,12 @@ class DataModel {
     
     func addJSONFriends(friends: [jsonFriend]) {
         print("!@!@##!############")
+    
         print(friends.count, "Friends inthe list###########")
         friends.map({
             let tmpAvatar = UIImage()
-            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, userId: $0.id!)
+            let x:Int = $0.id!
+            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, userId: x)
             print("adding new jsonFriend")
             addFriend(newFriend: newFriend)
             
@@ -129,9 +134,9 @@ class DataModel {
             let postLocation = CLLocation()
             let postImage = UIImage()
             let dateCreated = Date()
-            let userId = $0.id!
+            let userId = $0.user_id!
             
-            let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, createdBy: userId.description, dateCreated: dateCreated)
+            let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, createdBy: userId, dateCreated: dateCreated)
             
             let author = friendList.map{
                 if($0.userId == userId) {
@@ -185,7 +190,7 @@ class DataModel {
         let date =  Date()
         let newPost = Post(title: "happy day", content: "what a happy day",
                            location: location, image: image,
-                           createdBy: "johns@gmail.com", dateCreated: date)
+                           createdBy: 1, dateCreated: date)
         
         //addPost(newPost: newPost, friend: friendList[1]
     }
@@ -203,12 +208,21 @@ class DataModel {
         newCDPost.copyPost(newPost: newPost)
         newCDPost.relationship = friendToAddPostTo[0]
         friendToAddPostTo[0].addToRelationship(newCDPost)
-        
+        friend.posts.append(newPost)
         do {
             try managedObjectContext.save()
         } catch {
             print("could not save after adding item to province")
         }
+    }
+    
+    func findFriendWithId(id: Int) -> Friend! {
+//        let _ = friendList.map({ () -> (Friend) in
+//            if $0.userId == id  { return $0 }
+//        })
+        let friends = friendList.filter({$0.userId == id})
+        if friends.count > 0 { return friends[0]}
+        return nil
     }
     
 //    func getPosts(friend: Friend) -> {

@@ -18,12 +18,15 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        currentUser = dataModel.currentUser
-        let newLocation = CLLocation()
-        let newDate = Date()
-        let myAvatar = UIImage()
+        //currentUser = dataModel.friendList[0]
+        //let newLocation = CLLocation()
+        //let newDate = Date()
+        //let myAvatar = UIImage()
+       
         
+        currentUser = dataModel.currentUser
         currentUser.posts.map({ myPosts.append($0)})
+        print("my posts = ", myPosts.count)
         
 //        let newPost = Post(title: "my post", content: "lalalalala", location: newLocation, image: myAvatar, createdBy: "Myself", dateCreated: newDate)
 //        myPosts.append(newPost)

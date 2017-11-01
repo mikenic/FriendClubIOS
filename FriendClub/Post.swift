@@ -16,12 +16,12 @@ class Post: NSObject {
     var content = ""
     var location = CLLocation()
     var image: UIImage? = nil
-    var createdBy = ""
+    var createdBy = 999
     var dateCreated = Date()
     
     
     init(title: String,  content: String, location: CLLocation, image: UIImage,
-         createdBy:String, dateCreated: Date) {
+         createdBy:Int, dateCreated: Date) {
         self.title = title
         self.content  = content
         self.location = location
