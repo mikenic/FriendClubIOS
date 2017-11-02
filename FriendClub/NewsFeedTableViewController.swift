@@ -48,8 +48,11 @@ class NewsFeedTableViewController: UITableViewController {
         let authorName = dataModel.findFriendWithId(id: item.createdBy).firstName + " " +
                             dataModel.findFriendWithId(id: item.createdBy).lastName
         author.text = authorName
-        let content = cell.viewWithTag(3000) as! UITextView
+        let content = cell.viewWithTag(3000) as! UITextView //3000 = contentText
         content.text = item.content
+        
+        let authorPic = cell.viewWithTag(4000) as! UIImageView
+        authorPic.image = dataModel.findFriendWithId(id: item.createdBy).avatar
         return cell
     }
     
