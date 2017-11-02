@@ -7,7 +7,9 @@
 //
 
 import Foundation
+import UIKit
 
+let BaseURL = "http://friend-club.herokuapp.com"
 struct jsonHeader: Decodable {
     let status: String?
     let message: String?
@@ -53,6 +55,7 @@ struct jsonPost: Decodable {
 
 protocol FcApiProtocol: class {
     func addFriends(friends: [jsonFriend])
+    func setAvatar(friend: Friend, avatar: UIImage)
     func addPosts(posts: [jsonPost])
     func setUser()
 }
@@ -126,7 +129,36 @@ class FcApi {
     }
     
     
-    
+    static func fetchAvatarImage(urlString: String, friend: Friend) {
+        //let imageNameUrl = folderUrl_to_request + imageName;
+        let imageNameURL = BaseURL + urlString
+        
+        let imageUrl: URL = URL(string: imageNameURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!;
+        
+        let imageUrlRequest = NSMutableURLRequest(url: imageUrl);
+        print("###################")
+        print("fetching ... : ", imageNameURL)
+        imageUrlRequest.httpMethod = "GET";
+        let urlsession = URLSession.shared
+        
+        let imageTask = urlsession.dataTask(with: imageUrl, completionHandler: { imageData, response, error in
+            DispatchQueue.main.async {
+                if (error != nil) {
+                    print("image downloading error ", error)
+                } else {
+                    let avatar = UIImage(data: imageData!)
+                    delegate?.setAvatar(friend: friend, avatar: avatar!)
+                    //friend.avatar = UIImage(data: imageData!)
+                    
+                    //contact.image = UIImage(data: imageData!);
+                    //self.tableView.reloadData();
+                }
+            } //dispatch
+        } //completionHandler
+        );//dataTaskwithUrlRequest()
+        imageTask.resume();
+        
+    }
     
     
     static func fetchMyPosts() {

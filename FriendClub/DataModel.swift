@@ -26,9 +26,9 @@ class DataModel {
     //add the app user as the first friend in the list
     func addUserToFriends() {
         let tmpPic = UIImage()
-        let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic, userId: 0)
-        addFriend(newFriend: thisUser) // add this user as the first friend
-        currentUser = friendList[0]
+        //let thisUser = Friend(firstName: "Max", lastName: "Power", email: "mpower@gmail.com", avatar: tmpPic, userId: 0)
+        //addFriend(newFriend: thisUser) // add this user as the first friend
+        //currentUser = friendList[0]
     }
     
     func loadData(delegate: AppDelegate) {
@@ -73,8 +73,8 @@ class DataModel {
                             loadedImage.imageOrientation)
                     }
                 }
-                
-                let newFriend:Friend = Friend(firstName: ($0 as! CD_Friend).firstName!, lastName: ($0 as! CD_Friend).lastName!, email: ($0 as! CD_Friend).email!, avatar: friendAvatar!, userId: 0)
+                ///////////fix has no avatarURLstr !!!!!!!!!!!!####
+                let newFriend:Friend = Friend(firstName: ($0 as! CD_Friend).firstName!, lastName: ($0 as! CD_Friend).lastName!, email: ($0 as! CD_Friend).email!, avatar: friendAvatar!, avatarURLstr: "", userId: 0)
                 friendList.append(newFriend)
                 
                 let fetchRequest =
@@ -120,7 +120,7 @@ class DataModel {
         friends.map({
             let tmpAvatar = UIImage()
             let x:Int = $0.id!
-            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, userId: x)
+            let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, avatarURLstr: ($0.avatar?.url)!, userId: x)
             print("adding new jsonFriend")
             addFriend(newFriend: newFriend)
             

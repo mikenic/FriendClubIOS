@@ -50,7 +50,17 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     
     func addFriends(friends: [jsonFriend]) {
         dataModel.addJSONFriends(friends: friends)
+        
+        dataModel.friendList.map({
+            FcApi.fetchAvatarImage(urlString: $0.avatarURLstr, friend: $0)
+        })
+        
         FcApi.fetchPosts(delegateController: self)
+    }
+    
+    func setAvatar(friend: Friend, avatar: UIImage) {
+        friend.avatar = avatar
+        print("set friend avatar")
     }
     
     func addPosts(posts: [jsonPost]) {
