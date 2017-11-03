@@ -13,6 +13,11 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
 
     var dataModel: DataModel!
     
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //generateTestPosts()
@@ -21,14 +26,40 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         //dataModel.loadData(delegate:(UIApplication.shared.delegate)
           //  as! AppDelegate)
         // if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
-        dataModel.deleteAllData()
-        FcApi.fetchFriends(delegateController: self)
+        
+        
+        
+        
+        
+        //FcApi.authenticateUser(delegateController: self)
+        //Just delete all and fetch friends
+        //dataModel.deleteAllData()
+        //FcApi.fetchFriends(delegateController: self)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
        // FcApi.fetchPosts(delegateController: self)
 //        dataModel.setCurrentUser()
         //dataModel.addUserToFriends()        
         //dataModel.generateTestPosts()
     }
-
+    
+    
+    @IBAction func submitBtnClicked(_ sender: Any) {
+        let email = emailTextField.text!
+        let password = passwordTextField.text!
+        FcApi.authenticateUser(delegateController: self, email: email, password: password)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,8 +81,7 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     
     func addFriends(friends: [jsonFriend]) {
         dataModel.addJSONFriends(friends: friends)
-        
-        dataModel.friendList.map({
+        _ = dataModel.friendList.map({
             FcApi.fetchAvatarImage(urlString: $0.avatarURLstr, friend: $0)
         })
         
@@ -65,32 +95,29 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     
     func addPosts(posts: [jsonPost]) {
         dataModel.addJSONPosts(posts: posts)
+        for friend in dataModel.friendList {
+            var index = 0
+            for post in friend.posts {
+                FcApi.fetchPostImage(urlString: post.imageURLstr, friend: friend, postNumber: index)
+                index += 1
+            }
+        }
+    }
+    
+    func userAuthSuccess(email: String, token: String) {
+        print("\n\n\n\n\n\n ##########abab")
+        print(token)
+        dataModel.setUserCreds(email: "", token: token)
+        dataModel.deleteAllData()
+        FcApi.fetchFriends(delegateController: self)
     }
     
     func setUser() {
         dataModel.setCurrentUser()
     }
     
-    //////////////extention api
-    /*
-    func fetchFriends() {
-        let jsonUrlString = "https://friend-club.herokuapp.com/api/v1/my_friends"
-        
-        guard let url = URL(string: jsonUrlString) else { return }
-        
-        print("declare")
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            
-            guard let data = data else { return }
-            
-            do {
-                //let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                let newFriend = try JSONDecoder().decode(jsonFriend.self, from: data)
-                
-                print(newFriend)
-            } catch let jsonErr {
-                print("error serializing json in myfriends", jsonErr)
-            }
-        }.resume()
-    }*/
+    func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage) {
+        friend.posts[postNumber].image = postImage
+    }
+    
 }

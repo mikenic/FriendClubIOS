@@ -23,6 +23,11 @@ struct avatar: Decodable {
     let url: String?
     let thumb: thumb?
 }
+
+struct jsonToken: Decodable {
+    let auth_token: String?
+}
+
 struct jsonFriend: Decodable {
     let id: Int?
     let email: String?
@@ -36,7 +41,7 @@ struct jsonFriend: Decodable {
 struct jsonData: Decodable {
     let data: [jsonFriend]?
 }
-//////
+
 struct jsonPostData: Decodable {
     let data: [jsonPost]?
 }
@@ -58,108 +63,101 @@ protocol FcApiProtocol: class {
     func setAvatar(friend: Friend, avatar: UIImage)
     func addPosts(posts: [jsonPost])
     func setUser()
+    func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage)
+    func userAuthSuccess(email: String, token: String)
 }
 
 class FcApi {
     static weak var delegate: FcApiProtocol?
-    
+
     static func fetchFriends(delegateController: FcApiProtocol) {
         delegate = delegateController
         let jsonUrlString = "http://friend-club.herokuapp.com/api/v1/my_friends"
+        //let urlWithParams = jsonUrlString + "?Authorization=" + DataModel.userToken
         guard let url = URL(string: jsonUrlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
-            
-            guard let data = data else { return }
-            print("DDKDKDKDKDK", data)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
 
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, err) in
+            guard let data = data else { return }
             do {
-                //let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                print(data)
-                let dataAsString = String(data: data, encoding: .utf8)
-                print(dataAsString)
-                
-                let webDesc = try JSONDecoder().decode(jsonHeader.self, from: data)
-                print(webDesc.status)
-                
+                _ = try JSONDecoder().decode(jsonHeader.self, from: data)
                 let friendData = try JSONDecoder().decode(jsonData.self, from: data)
-                //print(friendData.data![0].first_name)
-                
                 delegate?.addFriends(friends: friendData.data!)
-                
-                //let newFriend = try JSONDecoder().decode(jsonFriend.self, from: data)
-                
-                //print(newFriend)
-                
                 delegate?.setUser()
-                
-                
             } catch let jsonErr {
-                print("error serializing json in myfriends")
+                print("error serializing json in fetch friends", jsonErr)
             }
         }.resume()
     }
-    
-    
-    
-    
-    
-    
     
     static func fetchPosts(delegateController: FcApiProtocol) {
         delegate = delegateController
         let jsonUrlString = "https://friend-club.herokuapp.com/api/v1/posts"
         guard let url = URL(string: jsonUrlString) else { return }
-        URLSession.shared.dataTask(with: url) { (data, response, err) in
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, err) in
             guard let data = data else { return }
-            print("ASASASAS", data)
             do {
-                
-                print(data)
-                let dataAsString = String(data: data, encoding: .utf8)
-                print(dataAsString)
-                
-                let webDesc = try JSONDecoder().decode(jsonHeader.self, from: data)
+                _ = try JSONDecoder().decode(jsonHeader.self, from: data)
                 let postData = try JSONDecoder().decode(jsonPostData.self, from: data)
                 delegate?.addPosts(posts: postData.data!)
             } catch let jsonErr {
-                print("error serializing json in posts")
+                print("error serializing json in posts", jsonErr)
             }
-            }.resume()
+        }.resume()
     }
     
-    
     static func fetchAvatarImage(urlString: String, friend: Friend) {
-        //let imageNameUrl = folderUrl_to_request + imageName;
         let imageNameURL = BaseURL + urlString
-        
         let imageUrl: URL = URL(string: imageNameURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!;
-        
         let imageUrlRequest = NSMutableURLRequest(url: imageUrl);
-        print("###################")
-        print("fetching ... : ", imageNameURL)
         imageUrlRequest.httpMethod = "GET";
-        let urlsession = URLSession.shared
+        imageUrlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+
         
+        
+        let urlsession = URLSession.shared
         let imageTask = urlsession.dataTask(with: imageUrl, completionHandler: { imageData, response, error in
             DispatchQueue.main.async {
                 if (error != nil) {
-                    print("image downloading error ", error)
+                    print("image downloading error ", error!)
                 } else {
+                    
+                    
                     let avatar = UIImage(data: imageData!)
                     delegate?.setAvatar(friend: friend, avatar: avatar!)
-                    //friend.avatar = UIImage(data: imageData!)
-                    
-                    //contact.image = UIImage(data: imageData!);
-                    //self.tableView.reloadData();
                 }
             } //dispatch
         } //completionHandler
         );//dataTaskwithUrlRequest()
         imageTask.resume();
-        
     }
     
+    static func fetchPostImage(urlString: String, friend: Friend, postNumber: Int) {
+        let imageNameURL = BaseURL + urlString
+        let imageUrl: URL = URL(string: imageNameURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!;
+        let imageUrlRequest = NSMutableURLRequest(url: imageUrl);
+        imageUrlRequest.httpMethod = "GET";
+        imageUrlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+        let urlsession = URLSession.shared
+        let imageTask = urlsession.dataTask(with: imageUrl, completionHandler: { imageData, response, error in
+            DispatchQueue.main.async {
+                if (error != nil) {
+                    print("image downloading error ", error)
+                } else {
+                    let postImage = UIImage(data: imageData!)
+                    delegate?.setPostImage(friend: friend, postNumber: postNumber, postImage: postImage!)
+                }
+            } //dispatch
+        } //completionHandler
+        );//dataTaskwithUrlRequest()
+        imageTask.resume();
+    }
     
     static func fetchMyPosts() {
         
@@ -172,5 +170,24 @@ class FcApi {
     static func fetchFriendsPost() {
         
     }
-    
+
+    static func authenticateUser(delegateController: FcApiProtocol, email: String, password: String) {
+        var request = URLRequest(url: URL(string: "http://friend-club.herokuapp.com/authenticate")!)
+        request.httpMethod = "POST"
+        let params = ["email" : email, "password" : password]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLSession.shared.dataTask(with: request) {(data:Data?, response: URLResponse?, error:Error?) in
+            if let safeData = data {
+                do {
+                    let token = try JSONDecoder().decode(jsonToken.self, from: safeData)
+                    let tokenStr:String = token.auth_token!
+                    delegateController.userAuthSuccess(email: email, token: tokenStr)
+                }
+                catch let jsonErr {
+                    print("error serializing json in authorization ", jsonErr)
+                }
+            }
+        }.resume()
+    }
 }

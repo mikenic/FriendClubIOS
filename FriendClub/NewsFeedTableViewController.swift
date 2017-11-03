@@ -16,6 +16,7 @@ class NewsFeedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         posts .append(contentsOf: dataModel.postList)
+        tableView.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -44,16 +45,24 @@ class NewsFeedTableViewController: UITableViewController {
         let item = posts[indexPath.row]
         let label = cell.viewWithTag(1000) as! UILabel //1000 = title
         label.text = item.title
-        let author = cell.viewWithTag(2000) as! UILabel
+        let author = cell.viewWithTag(2000) as! UILabel //2000 = authorName
         let authorName = dataModel.findFriendWithId(id: item.createdBy).firstName + " " +
                             dataModel.findFriendWithId(id: item.createdBy).lastName
         author.text = authorName
         let content = cell.viewWithTag(3000) as! UITextView //3000 = contentText
         content.text = item.content
         
-        let authorPic = cell.viewWithTag(4000) as! UIImageView
+        let authorPic = cell.viewWithTag(4000) as! UIImageView //4000 = authorAvatar
         authorPic.image = dataModel.findFriendWithId(id: item.createdBy).avatar
+        
+        //print("##############################")
+        //print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        //print("the post pic url is: ", item.imageURLstr)
+        let postPic = cell.viewWithTag(5000) as! UIImageView //5000 = postImage
+        postPic.image = item.image
+        
         return cell
+
     }
     
 

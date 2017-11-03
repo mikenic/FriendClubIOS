@@ -48,6 +48,7 @@ public class CD_Post: NSManagedObject {
         let location = CLLocation()
         let author = 1
         var postImage = UIImage()
+        var postImageURLStr = ""
         
         if(self.image != nil) {
             postImage = UIImage(data: self.image! as Data)!
@@ -57,7 +58,7 @@ public class CD_Post: NSManagedObject {
         
         
         let postDate = Date(timeIntervalSince1970: (self.date?.timeIntervalSince1970)!)
-        let post = Post(title: self.title!, content: self.content!, location: location, image: postImage, createdBy: author, dateCreated: postDate)
+        let post = Post(title: self.title!, content: self.content!, location: location, image: postImage, imageURLstr: postImageURLStr, createdBy: author, dateCreated: postDate)
         
         return post
     
