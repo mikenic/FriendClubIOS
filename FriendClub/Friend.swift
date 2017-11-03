@@ -27,7 +27,4 @@ class Friend: NSObject  {
         self.userId = userId
         self.avatarURLstr = avatarURLstr
     }
-    
-    
-    
 }

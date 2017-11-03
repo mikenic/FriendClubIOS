@@ -46,12 +46,9 @@ class NewPostViewController: UIViewController {
         let user = (delegate?.getCurrentUser())!
         let tmpImage = UIImage()
         let imageURLStr = ""
-        
         let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: tmpImage, imageURLstr: imageURLStr, createdBy: user.userId!, dateCreated: newDate)
-        
         delegate?.newPostViewController(self, didFinishAdding: newPost)
         dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func cancelBtnClicked(_ sender: Any) {

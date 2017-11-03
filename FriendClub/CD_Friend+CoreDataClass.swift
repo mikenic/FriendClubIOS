@@ -21,6 +21,5 @@ public class CD_Friend: NSManagedObject {
         if(newFriend.avatar != nil) {
             self.avatar = (UIImageJPEGRepresentation(newFriend.avatar!, 1) as NSData?)
         }
-        
     }
 }

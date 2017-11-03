@@ -42,24 +42,12 @@ class FriendsTableViewController: UITableViewController {
         return friends.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath)
-        
-        ///            let cell = tableView.dequeueReusableCell(
-        //             withIdentifier: "CreatureListItem", for: indexPath)
         let item = friends[indexPath.row]
-       
         let label = cell.textLabel
-        // let label = cell.viewWithTag(1000) as! UILabel //1000 = title
         label?.text = item.firstName
-        
         return cell
-        
-        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -69,21 +57,13 @@ class FriendsTableViewController: UITableViewController {
         print(friends[indexPath.row].firstName + "was clicked")
     }
     
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        print("preparing for segue")
-        
         let navigationController =
             segue.destination as! UINavigationController
         let controller = navigationController.topViewController as!
         FriendProfileTableViewController
-        //controller.currentFriend = selectedFriend
-        
         profileController = controller
     }
-    
     
     /*
     // Override to support conditional editing of the table view.

@@ -28,23 +28,7 @@ public class CD_Post: NSManagedObject {
         }
     }
     
-    
-    ////////////////////////////
-    
     func toPost() -> Post {
-//        let provinceListItem = ProvinceListItem()
-//        provinceListItem.text = self.name
-//        provinceListItem.checked = self.checked
-//        provinceListItem.location = self.location
-//        provinceListItem.dateVisted = self.date as Date
-//        provinceListItem.rating = Int(self.rating)
-//
-//        provinceListItem.locationCoord =
-//            CLLocation(latitude: self.latitude, longitude: self.longitude)
-//        provinceListItem.image = UIImage(data: self.imageData)
-//
-//        return provinceListItem
-
         let location = CLLocation()
         let author = 1
         var postImage = UIImage()
@@ -55,15 +39,10 @@ public class CD_Post: NSManagedObject {
         } else {
             
         }
-        
-        
         let postDate = Date(timeIntervalSince1970: (self.date?.timeIntervalSince1970)!)
         let post = Post(title: self.title!, content: self.content!, location: location, image: postImage, imageURLstr: postImageURLStr, createdBy: author, dateCreated: postDate)
-        
         return post
-    
     }
-    
 }
 
 

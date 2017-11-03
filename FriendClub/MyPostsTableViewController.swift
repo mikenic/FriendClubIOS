@@ -23,14 +23,10 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         //let newDate = Date()
         //let myAvatar = UIImage()
        
-        
         currentUser = dataModel.currentUser
         currentUser.posts.map({ myPosts.append($0)})
         print("my posts = ", myPosts.count)
-        
-//        let newPost = Post(title: "my post", content: "lalalalala", location: newLocation, image: myAvatar, createdBy: "Myself", dateCreated: newDate)
-//        myPosts.append(newPost)
-
+    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -53,19 +49,20 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         return myPosts.count
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyPostItem", for: indexPath)
         let item = myPosts[indexPath.row]
-        let label = cell.viewWithTag(1000) as! UILabel //1000 = title
+        //1000 = title
+        let label = cell.viewWithTag(1000) as! UILabel
         label.text = item.title
-        let contentText = cell.viewWithTag(2000) as!UITextView //2000 = text content
+        //2000 = text content
+        let contentText = cell.viewWithTag(2000) as!UITextView
         contentText.text = item.content
-        
-        let postImage = cell.viewWithTag(3000) as!UIImageView //3000 = post image
+        //3000 = post image
+        let postImage = cell.viewWithTag(3000) as!UIImageView
         postImage.image = item.image
-        
-        let postDate = cell.viewWithTag(4000) as! UILabel //4000 = post date
+        //4000 = post date
+        let postDate = cell.viewWithTag(4000) as! UILabel
         postDate.text = item.dateCreated.description
         
         return cell

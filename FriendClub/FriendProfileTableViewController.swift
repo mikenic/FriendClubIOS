@@ -18,7 +18,6 @@ class FriendProfileTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let avatarImage = UIImage()
         
     }
 

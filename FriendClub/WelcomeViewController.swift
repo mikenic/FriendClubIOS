@@ -13,7 +13,6 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
 
     var dataModel: DataModel!
     
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
@@ -26,33 +25,17 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         //dataModel.loadData(delegate:(UIApplication.shared.delegate)
           //  as! AppDelegate)
         // if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
-        
-        
-        
-        
-        
+        //------------------------------
         //FcApi.authenticateUser(delegateController: self)
         //Just delete all and fetch friends
         //dataModel.deleteAllData()
-        //FcApi.fetchFriends(delegateController: self)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        //FcApi.fetchFriends(delegateController: self
+        //-------------------------
        // FcApi.fetchPosts(delegateController: self)
 //        dataModel.setCurrentUser()
         //dataModel.addUserToFriends()        
         //dataModel.generateTestPosts()
     }
-    
     
     @IBAction func submitBtnClicked(_ sender: Any) {
         let email = emailTextField.text!
@@ -64,7 +47,6 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let tabbarController = segue.destination as! UITabBarController
@@ -84,7 +66,6 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         _ = dataModel.friendList.map({
             FcApi.fetchAvatarImage(urlString: $0.avatarURLstr, friend: $0)
         })
-        
         FcApi.fetchPosts(delegateController: self)
     }
     

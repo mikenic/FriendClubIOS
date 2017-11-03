@@ -20,7 +20,7 @@ class DataModel {
     static var userToken: String!
     
     init() {
-       //addUserToFriends()
+       //
     }
     
     func setCurrentUser() {
@@ -65,7 +65,6 @@ class DataModel {
     
     func importFromCoreData(cdFriendList: [NSManagedObject],
                             context: NSManagedObjectContext) {
-        
         //deleteAllData()
         friendList = []
         if(cdFriendList.count > 0) {
@@ -123,28 +122,21 @@ class DataModel {
     }
     
     func addJSONFriends(friends: [jsonFriend]) {
-        print("!@!@##!############")
-    
-        print(friends.count, "Friends inthe list###########")
-        _ = friends.map({
+            _ = friends.map({
             let tmpAvatar = UIImage()
             let x:Int = $0.id!
             let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, avatarURLstr: ($0.avatar?.url)!, userId: x)
             print("adding new jsonFriend")
             addFriend(newFriend: newFriend)
-            
         })
     }
     
     func addJSONPosts(posts: [jsonPost]) {
         _ = posts.map{
-//            let tmpPic = UIImage()
-            
             let postLocation = CLLocation()
             let postImage = UIImage()
             let dateCreated = Date()
             let userId = $0.user_id!
-            
             let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, imageURLstr: ($0.image?.url)!, createdBy: userId, dateCreated: dateCreated)
             
             _ = friendList.map{
