@@ -65,6 +65,7 @@ protocol FcApiProtocol: class {
     func setUser()
     func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage)
     func userAuthSuccess(email: String, token: String)
+    func userAuthFailed()
 }
 
 class FcApi {
@@ -181,8 +182,13 @@ class FcApi {
             if let safeData = data {
                 do {
                     let token = try JSONDecoder().decode(jsonToken.self, from: safeData)
-                    let tokenStr:String = token.auth_token!
-                    delegateController.userAuthSuccess(email: email, token: tokenStr)
+                    if (token.auth_token != nil) {
+                        let tokenStr:String = token.auth_token!
+                        delegateController.userAuthSuccess(email: email, token: tokenStr)
+                    } else {
+                        
+                        delegateController.userAuthFailed()
+                    }
                 }
                 catch let jsonErr {
                     print("error serializing json in authorization ", jsonErr)

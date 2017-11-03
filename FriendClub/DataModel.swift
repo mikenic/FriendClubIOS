@@ -23,9 +23,9 @@ class DataModel {
        //
     }
     
-    func setCurrentUser() {
-        currentUser = friendList[1]
-    }
+//    func setCurrentUser() {
+//       // currentUser = friendList[1]
+//    }
     
     func setUserCreds(email:String, token:String) {
         self.userEmail = email

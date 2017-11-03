@@ -16,6 +16,7 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    @IBOutlet weak var enterButtonOutlet: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,10 +62,14 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         myPostsVC.dataModel = dataModel
     }
     
+    //adds friend and sets current user if email is equal
     func addFriends(friends: [jsonFriend]) {
         dataModel.addJSONFriends(friends: friends)
         _ = dataModel.friendList.map({
             FcApi.fetchAvatarImage(urlString: $0.avatarURLstr, friend: $0)
+            if($0.email == dataModel.userEmail) {
+                dataModel.currentUser = $0
+            }
         })
         FcApi.fetchPosts(delegateController: self)
     }
@@ -83,18 +88,31 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
                 index += 1
             }
         }
+        enterButtonOutlet.isEnabled = true
     }
     
     func userAuthSuccess(email: String, token: String) {
         print("\n\n\n\n\n\n ##########abab")
         print(token)
-        dataModel.setUserCreds(email: "", token: token)
+        dataModel.setUserCreds(email: email, token: token)
         dataModel.deleteAllData()
         FcApi.fetchFriends(delegateController: self)
     }
     
+    func userAuthFailed() {
+        
+        
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Login Failed", message: "Incorrect UserName or Password", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alertController, animated: true, completion: nil)
+        }
+        //self.present(alertController, animated: true, completion: nil)
+    }
+    
     func setUser() {
-        dataModel.setCurrentUser()
+       // dataModel.setCurrentUser()
     }
     
     func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage) {

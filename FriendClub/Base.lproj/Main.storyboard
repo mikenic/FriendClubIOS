@@ -35,7 +35,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6g-sY-21f">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x6g-sY-21f">
                                 <rect key="frame" x="164" y="491" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Enter">
@@ -81,6 +81,7 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="NcG-gO-6uS" id="XOL-C7-s5K"/>
+                        <outlet property="enterButtonOutlet" destination="x6g-sY-21f" id="5xb-ta-ltl"/>
                         <outlet property="passwordTextField" destination="l3z-3V-pZb" id="2a8-iJ-8LB"/>
                     </connections>
                 </viewController>
