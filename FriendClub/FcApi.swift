@@ -42,6 +42,10 @@ struct jsonData: Decodable {
     let data: [jsonFriend]?
 }
 
+struct jsonUserData: Decodable {
+    let data: jsonFriend?
+}
+
 struct jsonPostData: Decodable {
     let data: [jsonPost]?
 }
@@ -62,7 +66,8 @@ protocol FcApiProtocol: class {
     func addFriends(friends: [jsonFriend])
     func setAvatar(friend: Friend, avatar: UIImage)
     func addPosts(posts: [jsonPost])
-    func setUser()
+    func addUserPosts(posts: [jsonPost])
+    func setUser(user: jsonFriend)
     func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage)
     func userAuthSuccess(email: String, token: String)
     func userAuthFailed()
@@ -86,7 +91,7 @@ class FcApi {
                 _ = try JSONDecoder().decode(jsonHeader.self, from: data)
                 let friendData = try JSONDecoder().decode(jsonData.self, from: data)
                 delegate?.addFriends(friends: friendData.data!)
-                delegate?.setUser()
+                //delegate?.setUser()
             } catch let jsonErr {
                 print("error serializing json in fetch friends", jsonErr)
             }
@@ -111,6 +116,26 @@ class FcApi {
                 print("error serializing json in posts", jsonErr)
             }
         }.resume()
+    }
+    
+    static func fetchUserPosts(delegateController: FcApiProtocol) {
+        delegate = delegateController
+        let jsonUrlString = "https://friend-club.herokuapp.com/api/v1/my_posts"
+        guard let url = URL(string: jsonUrlString) else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+        
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, err) in
+            guard let data = data else { return }
+            do {
+                _ = try JSONDecoder().decode(jsonHeader.self, from: data)
+                let postData = try JSONDecoder().decode(jsonPostData.self, from: data)
+                delegate?.addUserPosts(posts: postData.data!)
+            } catch let jsonErr {
+                print("error serializing json in posts", jsonErr)
+            }
+            }.resume()
     }
     
     static func fetchAvatarImage(urlString: String, friend: Friend) {
@@ -159,6 +184,40 @@ class FcApi {
         );//dataTaskwithUrlRequest()
         imageTask.resume();
     }
+    
+    static func fetchUserInfo(delegateController: FcApiProtocol) {
+        delegate = delegateController
+        let jsonUrlString = "http://friend-club.herokuapp.com/api/v1/show"
+        //let urlWithParams = jsonUrlString + "?Authorization=" + DataModel.userToken
+        guard let url = URL(string: jsonUrlString) else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+        
+        
+        URLSession.shared.dataTask(with: urlRequest) { (data, response, err) in
+            guard let data = data else { return }
+            do {
+                _ = try JSONDecoder().decode(jsonHeader.self, from: data)
+                let friendData = try JSONDecoder().decode(jsonUserData.self, from: data)
+                let user:jsonFriend = friendData.data!
+                let str:String = String(data.description)
+                print("\n\n\n\n\n\n\n ", str)
+                print("\(data as NSData)")
+                let newStr = String(data: data, encoding: String.Encoding.utf8) as String!
+                print("\n\n\n ", newStr)
+                
+                
+                print("username is: ", user.first_name)
+                delegate?.setUser(user: user)
+                //delegate?.addFriends(friends: friendData.data!)
+                //delegate?.setUser()
+            } catch let jsonErr {
+                print("error serializing json in fetch friends", jsonErr)
+            }
+            }.resume()
+    }
+
+    
     
     static func fetchMyPosts() {
         

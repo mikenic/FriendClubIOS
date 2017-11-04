@@ -112,13 +112,28 @@ class DataModel {
     }
     
     func addPost(newPost:Post, friend: Friend) {
-        postList.append(newPost)
-        addPostToFriend(newPost: newPost,friend: friend)
+        if(friend.userId != currentUser.userId) {
+            postList.append(newPost)
+            addPostToFriend(newPost: newPost,friend: friend)
+        } else {
+            currentUser.posts.append(newPost) //doesnt add to core data
+            FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
+        }
     }
     
     func addFriend(newFriend:Friend) {
         friendList.append(newFriend)
         addNewFriendToCD(newFriend: newFriend)
+    }
+    
+    func addJSONUser(user: jsonFriend) {
+            let tmpAvatar = UIImage()
+            let userID = user.id!
+            let newUser = Friend(firstName: user.first_name!, lastName: user.last_name!, email: user.email!, avatar: tmpAvatar, avatarURLstr: (user.avatar?.url!)!, userId: user.id!)
+            currentUser = newUser
+        print("####################################")
+        print("\n\n\n\n\n")
+        print("the users name is: ", currentUser.firstName)
     }
     
     func addJSONFriends(friends: [jsonFriend]) {
@@ -138,6 +153,10 @@ class DataModel {
             let dateCreated = Date()
             let userId = $0.user_id!
             let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, imageURLstr: ($0.image?.url)!, createdBy: userId, dateCreated: dateCreated)
+            
+            if (currentUser != nil && userId == currentUser.userId) {
+                addPost(newPost: newPost, friend: currentUser)
+            }
             
             _ = friendList.map{
                 if($0.userId == userId) {
@@ -206,15 +225,17 @@ class DataModel {
         fetchRequest.predicate = NSPredicate.init(format: "email = %@",
                                                   friend.email)
         let friendToAddPostTo = try! managedObjectContext.fetch(fetchRequest)
-        let newCDPost = CD_Post(context: managedObjectContext)
-        newCDPost.copyPost(newPost: newPost)
-        newCDPost.relationship = friendToAddPostTo[0]
-        friendToAddPostTo[0].addToRelationship(newCDPost)
-        friend.posts.append(newPost)
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("could not save after adding item to province")
+        if(friendToAddPostTo.count > 0) {
+            let newCDPost = CD_Post(context: managedObjectContext)
+            newCDPost.copyPost(newPost: newPost)
+            newCDPost.relationship = friendToAddPostTo[0]
+            friendToAddPostTo[0].addToRelationship(newCDPost)
+            friend.posts.append(newPost)
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print("could not save after adding item to province")
+            }
         }
     }
     

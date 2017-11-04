@@ -79,6 +79,15 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         print("set friend avatar")
     }
     
+    func addUserPosts(posts: [jsonPost]) {
+        dataModel.addJSONPosts(posts: posts)
+        for post in dataModel.currentUser.posts {
+            var index = 0
+            FcApi.fetchPostImage(urlString: post.imageURLstr, friend: dataModel.currentUser, postNumber: index)
+            index += 1
+        }
+    }
+    
     func addPosts(posts: [jsonPost]) {
         dataModel.addJSONPosts(posts: posts)
         for friend in dataModel.friendList {
@@ -96,6 +105,8 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         print(token)
         dataModel.setUserCreds(email: email, token: token)
         dataModel.deleteAllData()
+        FcApi.fetchUserInfo(delegateController: self)
+        FcApi.fetchUserPosts(delegateController: self)
         FcApi.fetchFriends(delegateController: self)
     }
     
@@ -111,8 +122,18 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         //self.present(alertController, animated: true, completion: nil)
     }
     
-    func setUser() {
+    func setUser(user: jsonFriend) {
        // dataModel.setCurrentUser()
+        
+        dataModel.addJSONUser(user: user)
+        
+        FcApi.fetchAvatarImage(urlString: dataModel.currentUser.avatarURLstr, friend: dataModel.currentUser)
+        
+        //
+        
+        FcApi.fetchUserPosts(delegateController: self)
+        
+        
     }
     
     func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage) {
