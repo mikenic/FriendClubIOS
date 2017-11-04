@@ -117,6 +117,7 @@ class DataModel {
             addPostToFriend(newPost: newPost,friend: friend)
         } else {
             currentUser.posts.append(newPost) //doesnt add to core data
+            
             FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
         }
     }

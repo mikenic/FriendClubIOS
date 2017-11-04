@@ -177,7 +177,9 @@ class FcApi {
                     print("image downloading error ", error)
                 } else {
                     let postImage = UIImage(data: imageData!)
-                    delegate?.setPostImage(friend: friend, postNumber: postNumber, postImage: postImage!)
+                    if(postImage != nil) {
+                        delegate?.setPostImage(friend: friend, postNumber: postNumber, postImage: postImage!)
+                    }
                 }
             } //dispatch
         } //completionHandler
@@ -254,5 +256,34 @@ class FcApi {
                 }
             }
         }.resume()
+    }
+    
+    
+    static func sendNewPost(post: Post) {
+        var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/create")!)
+        request.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+        request.httpMethod = "POST"
+        let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : "someimg"] as [String : Any]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLSession.shared.dataTask(with: request) {(data:Data?, response: URLResponse?, error:Error?) in
+            if let safeData = data {
+                print(String(data: safeData, encoding: .utf8)!)
+                do {
+                    let token = try JSONDecoder().decode(jsonToken.self, from: safeData)
+                    if (token.auth_token != nil) {
+                        let tokenStr:String = token.auth_token!
+                        //delegateController.userAuthSuccess(email: email, token: tokenStr)
+                        print("#$#$#$\n\n\n\n\n#$#$#$#$#$#\n\n", "SUCCESSSSSS")
+                    } else {
+                        print("\n\n\n\n\n\n\n\n\n\n\n FAILED \n\n\n\n")
+                        //delegateController.userAuthFailed()
+                    }
+                }
+                catch let jsonErr {
+                    print("error serializing json in authorization ", jsonErr)
+                }
+            }
+            }.resume()
     }
 }

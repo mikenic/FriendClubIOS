@@ -97,6 +97,9 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
+        
+        /////////////////////////////////////////
+        FcApi.sendNewPost(post: post)
     }
     
     func newPostViewController(_ controller: NewPostViewController, didFinishEditing post: Post) {
