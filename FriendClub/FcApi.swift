@@ -139,14 +139,12 @@ class FcApi {
     }
     
     static func fetchAvatarImage(urlString: String, friend: Friend) {
-        let imageNameURL = BaseURL + urlString
+        let imageNameURL = urlString
         let imageUrl: URL = URL(string: imageNameURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!;
         let imageUrlRequest = NSMutableURLRequest(url: imageUrl);
         imageUrlRequest.httpMethod = "GET";
         imageUrlRequest.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
 
-        
-        
         let urlsession = URLSession.shared
         let imageTask = urlsession.dataTask(with: imageUrl, completionHandler: { imageData, response, error in
             DispatchQueue.main.async {
@@ -165,7 +163,7 @@ class FcApi {
     }
     
     static func fetchPostImage(urlString: String, friend: Friend, postNumber: Int) {
-        let imageNameURL = BaseURL + urlString
+        let imageNameURL = urlString
         let imageUrl: URL = URL(string: imageNameURL.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!;
         let imageUrlRequest = NSMutableURLRequest(url: imageUrl);
         imageUrlRequest.httpMethod = "GET";
@@ -263,6 +261,7 @@ class FcApi {
         var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/create")!)
         request.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
+        //let imageData = try? JSONSerialization.data(withJSONObject: <#T##Any#>, options: <#T##JSONSerialization.WritingOptions#>)
         let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : "someimg"] as [String : Any]
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
