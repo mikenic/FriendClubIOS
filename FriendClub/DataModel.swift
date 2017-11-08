@@ -121,6 +121,19 @@ class DataModel {
             FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
         }
     }
+   
+    
+    func addUserPost(newPost:Post, user: Friend) {
+        if(user.userId != currentUser.userId) {
+            //postList.append(newPost)
+            //addPostToFriend(newPost: newPost,friend: friend)
+        } else {
+            currentUser.posts.append(newPost) //doesnt add to core data
+            
+            //FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
+        }
+    }
+    
     
     func addFriend(newFriend:Friend) {
         friendList.append(newFriend)

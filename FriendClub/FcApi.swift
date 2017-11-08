@@ -133,7 +133,7 @@ class FcApi {
                 let postData = try JSONDecoder().decode(jsonPostData.self, from: data)
                 delegate?.addUserPosts(posts: postData.data!)
             } catch let jsonErr {
-                print("error serializing json in posts", jsonErr)
+                print("error serializing json in Userposts", jsonErr)
             }
             }.resume()
     }
@@ -151,8 +151,6 @@ class FcApi {
                 if (error != nil) {
                     print("image downloading error ", error!)
                 } else {
-                    
-                    
                     let avatar = UIImage(data: imageData!)
                     delegate?.setAvatar(friend: friend, avatar: avatar!)
                 }
@@ -257,14 +255,222 @@ class FcApi {
     }
     
     
+//    static func sendNewPost(post: Post) {
+//        var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/create")!)
+//        request.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+//        request.httpMethod = "POST"
+//        //let imageData = try? JSONSerialization.data(withJSONObject: <#T##Any#>, options: <#T##JSONSerialization.WritingOptions#>)
+//        let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : "someimg"] as [String : Any]
+//        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+//
+//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//        var body = Data();
+//        let image = post.image!
+//        let imageName = "imageName" /////////fix
+//        if let imageData = UIImageJPEGRepresentation(image, 0.6) {
+//            let boundary = "" ///////////////fix
+//            let encodedBoundary = ("--\(boundary)\r\n").data(using: .utf8)!;
+//
+//            body.append(encodedBoundary)
+//
+//            //body.append(encodedBoundary);
+//            body.append(("Content-Disposition: form-data; name=\"imagename\"\r\n\r\n").data(using: .utf8)!);
+//            body.append(("\(imageName)\r\n").data(using: .utf8)!);
+//
+//            body.append(encodedBoundary);
+//            body.append(("Content-Disposition: form-data; name=\"image\"; filename=\"\(imageName)\"\r\n").data(using: .utf8)!);
+//            body.append(("Content-Type: image/jpeg\r\n\r\n").data(using: .utf8)!);
+//            body.append(imageData);
+//            body.append(("\r\n").data(using: .utf8)!);
+//            body.append(encodedBoundary)
+//        }
+//
+//
+//
+////        if let imgname = contact.imageName, let image = contact.image, let imageData = UIImageJPEGRepresentation(image, 0.6)  {
+////            body.append(encodedBoundary);
+////            body.append(("Content-Disposition: form-data; name=\"imagename\"\r\n\r\n").data(using: .utf8)!);
+////            body.append(("\(imgname)\r\n").data(using: .utf8)!);
+////
+////            body.append(encodedBoundary);
+////            body.append(("Content-Disposition: form-data; name=\"image\"; filename=\"\(imgname)\"\r\n").data(using: .utf8)!);
+////            body.append(("Content-Type: image/jpeg\r\n\r\n").data(using: .utf8)!);
+////            body.append(imageData);
+////            body.append(("\r\n").data(using: .utf8)!);
+////        }
+//
+//
+//
+//        URLSession.shared.dataTask(with: request) {(data:Data?, response: URLResponse?, error:Error?) in
+//            if let safeData = data {
+//                print(String(data: safeData, encoding: .utf8)!)
+//                do {
+//                    let token = try JSONDecoder().decode(jsonToken.self, from: safeData)
+//                    if (token.auth_token != nil) {
+//                        let tokenStr:String = token.auth_token!
+//                        //delegateController.userAuthSuccess(email: email, token: tokenStr)
+//                        print("#$#$#$\n\n\n\n\n#$#$#$#$#$#\n\n", "SUCCESSSSSS")
+//                    } else {
+//                        print("\n\n\n\n\n\n\n\n\n\n\n FAILED \n\n\n\n")
+//                        //delegateController.userAuthFailed()
+//                    }
+//                }
+//                catch let jsonErr {
+//                    print("error serializing json in authorization ", jsonErr)
+//                }
+//            }
+//            }.resume()
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     static func sendNewPost(post: Post) {
-        var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/create")!)
+        
+        
+////        let request = urlRequest(url_to_request)
+//      var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/posts")!)
+//
+//        //var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/posts")!)
+//
+//
+//        request.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
+//
+//        request.addValue("INSERT", forHTTPHeaderField: "operation")    ////POST??? insert
+//
+//        let session = URLSession.shared
+//        request.httpMethod = "POST"
+//
+//        let boundary = "FieldBoundary"
+//
+//        let encodedData = encodeData(post, boundary)
+//        //let contentType = "multipart/form-data; boundary=\(boundary)";
+//        let contentType = "application/json; boundary=\(boundary)";
+//        request.addValue(contentType, forHTTPHeaderField: "Content-Type");
+//        request.httpBody = encodedData
+//
+//
+//        let task = session.uploadTask(
+//            with: request as URLRequest, from: encodedData, completionHandler:{
+//                resultdata, response, error in
+//                guard let data = resultdata, let _ = response, error == nil else {
+//                    print("error")
+//                    return
+//                }
+//                DispatchQueue.main.async{
+//                    let dataString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
+//                    print(dataString!)
+//                }//DispatchQueue--may not be necessary
+//        })
+//        task.resume()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        var request = URLRequest(url: URL(string: "https://friend-club.herokuapp.com/api/v1/posts")!)
         request.addValue("Token \(DataModel.userToken!)", forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         //let imageData = try? JSONSerialization.data(withJSONObject: <#T##Any#>, options: <#T##JSONSerialization.WritingOptions#>)
-        let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : "someimg"] as [String : Any]
+       
+        
+        let postImage = UIImageJPEGRepresentation(post.image!, 0.6)!
+        let base64Image = postImage.base64EncodedString(options: .lineLength64Characters)
+        //let base64Image = postImage.base64EncodedString()
+    
+        let fullImageString = "data:image/jpeg;base64,\(base64Image)"
+        //let fullImageString = base64Image
+        
+        let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : fullImageString] as [String : Any]
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        print("\n\n\n\n\n\n WWWWWWWWWWWWW")
+        print(fullImageString)
+        print("\n\n")
+        print(request.httpBody?.description)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        print(request.httpBody?.description)
+      
+        var body = Data();
+        let image = post.image!
+        let imageName = "imageName" /////////fix
+//        if let imageData = UIImageJPEGRepresentation(image, 0.6) {
+//            let boundary = "" ///////////////fix
+//            let encodedBoundary = ("--\(boundary)\r\n").data(using: .utf8)!;
+//
+//            body.append(encodedBoundary)
+//
+//            //body.append(encodedBoundary);
+//            body.append(("Content-Disposition: form-data; name=\"imagename\"\r\n\r\n").data(using: .utf8)!);
+//            body.append(("\(imageName)\r\n").data(using: .utf8)!);
+//
+//            body.append(encodedBoundary);
+//            body.append(("Content-Disposition: form-data; name=\"image\"; filename=\"\(imageName)\"\r\n").data(using: .utf8)!);
+//            body.append(encodedBoundary);
+//
+//            body.append(("Content-Type: image/jpeg\r\n\r\n").data(using: .utf8)!);
+//            body.append(imageData);
+//            body.append(("\r\n").data(using: .utf8)!);
+//            body.append(encodedBoundary)
+//        }
+
+
+
+        //        if let imgname = contact.imageName, let image = contact.image, let imageData = UIImageJPEGRepresentation(image, 0.6)  {
+        //            body.append(encodedBoundary);
+        //            body.append(("Content-Disposition: form-data; name=\"imagename\"\r\n\r\n").data(using: .utf8)!);
+        //            body.append(("\(imgname)\r\n").data(using: .utf8)!);
+        //
+        //            body.append(encodedBoundary);
+        //            body.append(("Content-Disposition: form-data; name=\"image\"; filename=\"\(imgname)\"\r\n").data(using: .utf8)!);
+        //            body.append(("Content-Type: image/jpeg\r\n\r\n").data(using: .utf8)!);
+        //            body.append(imageData);
+        //            body.append(("\r\n").data(using: .utf8)!);
+        //        }
+
+
+
         URLSession.shared.dataTask(with: request) {(data:Data?, response: URLResponse?, error:Error?) in
             if let safeData = data {
                 print(String(data: safeData, encoding: .utf8)!)
@@ -285,4 +491,69 @@ class FcApi {
             }
             }.resume()
     }
+
+
+    static func encodeData(_ post: Post, _ boundary: String) -> Data {
+        let encodedBoundary = ("--\(boundary)\r\n").data(using: .utf8)!;
+        var body = Data();
+        //starting the multipart entity
+        
+//        let params = ["title" : post.title, "content" : post.content, "longitude" : post.location.coordinate.longitude, "latitude" : post.location.coordinate.latitude, "image" : "someimg"
+//
+        
+        
+        
+        body.append(encodedBoundary)
+        body.append(("Content-Disposition: form-data; name=\"title\"\r\n\r\n").data(using: .utf8)!)
+        body.append(("\(post.title)\r\n").data(using: .utf8)!)
+        body.append(encodedBoundary)
+        
+        body.append(("Content-Disposition: form-data; name=\"content\"\r\n\r\n").data(using: .utf8)!)
+        body.append(("\(post.content)\r\n").data(using: .utf8)!)
+        body.append(encodedBoundary)
+        
+        body.append(("Content-Disposition: form-data; name=\"longitude\"\r\n\r\n").data(using: .utf8)!)
+        body.append(("\(post.location.coordinate.longitude)\r\n").data(using: .utf8)!)
+        body.append(encodedBoundary)
+            
+        body.append(("Content-Disposition: form-data; name=\"latitude\"\r\n\r\n").data(using: .utf8)!)
+        body.append(("\(post.location.coordinate.latitude)\r\n").data(using: .utf8)!)
+        
+//        body.append(("Content-Disposition: form-data; name=\"phone\"\r\n\r\n").data(using: .utf8)!);
+//        body.append(("\(contact.phone!)\r\n").data(using: .utf8)!);
+//
+        let imageName = post.title.trimmingCharacters(in: .whitespaces)
+        if let image = post.image, let imageData = UIImageJPEGRepresentation(image, 0.6)  {
+//            body.append(encodedBoundary);
+//            body.append(("Content-Disposition: form-data; name=\"imagename\"\r\n\r\n").data(using: .utf8)!);
+//            body.append(("\(imageName)\r\n").data(using: .utf8)!);
+//
+            body.append(encodedBoundary);
+            body.append(("Content-Disposition: form-data; name=\"image\"; filename=\"\(imageName)\"\r\n").data(using: .utf8)!);
+            body.append(("Content-Type: image/jpeg\r\n\r\n").data(using: .utf8)!);
+            body.append(imageData);
+            body.append(("\r\n").data(using: .utf8)!);
+        }
+        body.append(encodedBoundary);
+        return body
+    }
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
 }
+

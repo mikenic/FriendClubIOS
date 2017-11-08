@@ -92,7 +92,8 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
        
     func newPostViewController(_ controller: NewPostViewController, didFinishAdding post: Post) {
         let newRowIndex = myPosts.count
-        dataModel.addPost(newPost: post, friend: getCurrentUser())
+       // dataModel.addPost(newPost: post, friend: getCurrentUser())
+        dataModel.addUserPost(newPost: post, user: getCurrentUser())
         myPosts.append(post)
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]

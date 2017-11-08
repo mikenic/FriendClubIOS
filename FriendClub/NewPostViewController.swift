@@ -44,12 +44,26 @@ class NewPostViewController: UIViewController {
         newDate = Date()///must be editable
         newLocation = CLLocation()
         let user = (delegate?.getCurrentUser())!
-        let tmpImage = UIImage()
+        var tmpImage:UIImage? = UIImage()
         let imageURLStr = ""
-        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: tmpImage, imageURLstr: imageURLStr, createdBy: user.userId!, dateCreated: newDate)
+        tmpImage = postImage.image
+        let newPost = Post(title: newTitle, content: newContent, location: newLocation, image: tmpImage!, imageURLstr: imageURLStr, createdBy: user.userId!, dateCreated: newDate)
         delegate?.newPostViewController(self, didFinishAdding: newPost)
         dismiss(animated: true, completion: nil)
     }
+//
+//    func checkPermission() {
+//        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+//        switch photoAuthorizationStatus {
+//        case .authorized: print("Access is granted by user")
+//        case .notDetermined:
+//            PHPhotoLibrary.requestAuthorization({ (newStatus) in print("status is \(newStatus)") if newStatus == PHAuthorizationStatus.authorized { / do stuff here */ print("success") } })
+//        case .restricted: / print("User do not have access to photo album.")
+//        case .denied: / print("User has denied the permission.") }
+//
+//    }
+//
+    
     
     @IBAction func cancelBtnClicked(_ sender: Any) {
         dismiss(animated: true, completion: nil)
