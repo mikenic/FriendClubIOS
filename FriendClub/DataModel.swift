@@ -2,10 +2,9 @@
 //  DataModel.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by Michael Aubie on 2017-10-25.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import Foundation
 import UIKit
 import CoreData
@@ -14,7 +13,6 @@ import CoreLocation
 class DataModel {
     var postList: [Post] = []
     var friendList: [Friend] = []
-    
     var currentUser: Friend!
     var userEmail: String!
     static var userToken: String!
@@ -22,10 +20,6 @@ class DataModel {
     init() {
        //
     }
-    
-//    func setCurrentUser() {
-//       // currentUser = friendList[1]
-//    }
     
     func setUserCreds(email:String, token:String) {
         self.userEmail = email
@@ -42,7 +36,6 @@ class DataModel {
     
     func loadData(delegate: AppDelegate) {
         var cdFriendList: [NSManagedObject] = []
-        //var cdPostList: [NSManagedObject] = []
         let appDelegate = delegate
         let context = appDelegate.persistentContainer
         var managedObjectContext: NSManagedObjectContext!
@@ -88,9 +81,7 @@ class DataModel {
                 let fetchRequest =
                     NSFetchRequest<CD_Post>(entityName: "CD_Post")
                     fetchRequest.predicate = NSPredicate.init(format: "relationship = %@", $0)
-
                 let postList = try! context.fetch(fetchRequest)
-                print("size of post list " + postList.count.description)
                 friendList[friendList.count-1].posts = postList.map{
                     return $0.toPost()
                 }
@@ -99,13 +90,10 @@ class DataModel {
     }
     
     func addNewFriendToCD(newFriend: Friend) {
-        //friendList.append(newFriend)
-        
         let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
         let context = appDelegate.persistentContainer
         var managedObjectContext: NSManagedObjectContext!
         managedObjectContext = context.viewContext
-        
         let cdNewFriend = CD_Friend(context: managedObjectContext)
         cdNewFriend.copyFriend(newFriend: newFriend)
         appDelegate.saveContext()
@@ -117,23 +105,16 @@ class DataModel {
             addPostToFriend(newPost: newPost,friend: friend)
         } else {
             currentUser.posts.append(newPost) //doesnt add to core data
-            
             FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
         }
     }
    
-    
     func addUserPost(newPost:Post, user: Friend) {
         if(user.userId != currentUser.userId) {
-            //postList.append(newPost)
-            //addPostToFriend(newPost: newPost,friend: friend)
         } else {
             currentUser.posts.append(newPost) //doesnt add to core data
-            
-            //FcApi.fetchPostImage(urlString: newPost.imageURLstr, friend: currentUser, postNumber: currentUser.posts.count-1)
         }
     }
-    
     
     func addFriend(newFriend:Friend) {
         friendList.append(newFriend)
@@ -141,21 +122,17 @@ class DataModel {
     }
     
     func addJSONUser(user: jsonFriend) {
-            let tmpAvatar = UIImage()
-            let userID = user.id!
-            let newUser = Friend(firstName: user.first_name!, lastName: user.last_name!, email: user.email!, avatar: tmpAvatar, avatarURLstr: (user.avatar?.url!)!, userId: user.id!)
-            currentUser = newUser
-        print("####################################")
-        print("\n\n\n\n\n")
-        print("the users name is: ", currentUser.firstName)
+        let tmpAvatar = UIImage()
+        _ = user.id!
+        let newUser = Friend(firstName: user.first_name!, lastName: user.last_name!, email: user.email!, avatar: tmpAvatar, avatarURLstr: (user.avatar?.url!)!, userId: user.id!)
+        currentUser = newUser
     }
     
     func addJSONFriends(friends: [jsonFriend]) {
-            _ = friends.map({
+        _ = friends.map({
             let tmpAvatar = UIImage()
             let x:Int = $0.id!
             let newFriend = Friend(firstName: $0.first_name!, lastName: $0.last_name!, email: $0.email!, avatar: tmpAvatar, avatarURLstr: ($0.avatar?.url)!, userId: x)
-            print("adding new jsonFriend")
             addFriend(newFriend: newFriend)
         })
     }
@@ -167,19 +144,14 @@ class DataModel {
             let dateCreated = Date()
             let userId = $0.user_id!
             let newPost = Post(title: $0.title!, content: $0.content!, location: postLocation, image: postImage, imageURLstr: ($0.image?.url)!, createdBy: userId, dateCreated: dateCreated)
-            
             if (currentUser != nil && userId == currentUser.userId) {
                 addPost(newPost: newPost, friend: currentUser)
             }
-            
             _ = friendList.map{
                 if($0.userId == userId) {
                     addPost(newPost: newPost, friend: $0)
-                    print("#################################")
-                    print("added ", newPost.title, " to ", $0.firstName)
                 }
             }
-            ///author.fetchImage---------------------------------------------------
         }
     }
     
@@ -204,30 +176,9 @@ class DataModel {
     }
     
     func generateTestFriend() {
-        //addUserToFriends()
-        
-//        let avatarImage = UIImage()
-//        let newFriend = Friend(firstName: "john", lastName: "smith", email: "johns@gmail.com", avatar: avatarImage)
-//        addFriend(newFriend: newFriend)
-//        let newFriend2 = Friend(firstName: "joe", lastName: "rogan", email: "joe@jre.com", avatar: avatarImage)
-//        addFriend(newFriend: newFriend2)
-//        let newFriend3 = Friend(firstName: "jane", lastName: "smith", email: "janes@gmail.com", avatar: avatarImage)
-//        addFriend(newFriend: newFriend3)
-//        let newFriend4 = Friend(firstName: "les", lastName: "claypool", email: "les@gmail.com", avatar: avatarImage)
-//        addFriend(newFriend: newFriend4)
-        
-        //generateTestPosts()
     }
     
     func generateTestPosts() {
-//        let location = CLLocation()
-//        let image = UIImage()
-//        let date =  Date()
-////        let newPost = Post(title: "happy day", content: "what a happy day",
-//                           location: location, image: image,
-//                           createdBy: 1, dateCreated: date)
-        
-        //addPost(newPost: newPost, friend: friendList[1]
     }
     
     func addPostToFriend(newPost: Post, friend: Friend) {
@@ -246,17 +197,14 @@ class DataModel {
             friendToAddPostTo[0].addToRelationship(newCDPost)
             friend.posts.append(newPost)
             do {
-                try managedObjectContext.save()
+                //try managedObjectContext.save()
             } catch {
-                print("could not save after adding item to province")
+                //print("could not save after adding item to province")
             }
         }
     }
     
     func findFriendWithId(id: Int) -> Friend! {
-//        let _ = friendList.map({ () -> (Friend) in
-//            if $0.userId == id  { return $0 }
-//        })
         let friends = friendList.filter({$0.userId == id})
         if friends.count > 0 { return friends[0]}
         return nil

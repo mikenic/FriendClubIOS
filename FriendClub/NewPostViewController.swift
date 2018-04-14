@@ -2,10 +2,9 @@
 //  NewPostViewController.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-26.
+//  Created by Michael Aubie on 2017-10-26.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import UIKit
 import CoreLocation
 
@@ -20,22 +19,18 @@ protocol NewPostViewControllerDelegate: class {
 }
 
 class NewPostViewController: UIViewController {
-    
     var newTitle = "my new post"
     var newImage: UIImage?
     var newContent = ""
     var newDate = Date()
     var newLocation = CLLocation()
     weak var delegate: NewPostViewControllerDelegate?
-    
     @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var contentText: UITextView!
-    
     @IBAction func changeImageBtnClicked(_ sender: Any) {
         pickPhoto()
     }
-    
     @IBAction func saveBtnClicked(_ sender: Any) {
         newTitle = titleText.text!
         if let newText = contentText.text{
@@ -84,7 +79,6 @@ class NewPostViewController: UIViewController {
         //postImage.frame = CGRect(x: 10, y: 10, width: 260, height: 260)
     }
 }
-
 
 extension NewPostViewController: UIImagePickerControllerDelegate,
 UINavigationControllerDelegate {

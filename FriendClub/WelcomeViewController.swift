@@ -2,40 +2,20 @@
 //  WelcomeViewController.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by Michael Aubie on 2017-10-25.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import UIKit
 import CoreLocation
 
 class WelcomeViewController: UIViewController, FcApiProtocol {
-
     var dataModel: DataModel!
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var enterButtonOutlet: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //generateTestPosts()
-        //FcApi.fetchData()
-        //dataModel.generateTestFriend()
-        //dataModel.loadData(delegate:(UIApplication.shared.delegate)
-          //  as! AppDelegate)
-        // if(dataModel.friendList.count <= 1){ dataModel.generateTestFriend()}
-        //------------------------------
-        //FcApi.authenticateUser(delegateController: self)
-        //Just delete all and fetch friends
-        //dataModel.deleteAllData()
-        //FcApi.fetchFriends(delegateController: self
-        //-------------------------
-       // FcApi.fetchPosts(delegateController: self)
-//        dataModel.setCurrentUser()
-        //dataModel.addUserToFriends()        
-        //dataModel.generateTestPosts()
     }
     
     @IBAction func submitBtnClicked(_ sender: Any) {
@@ -44,9 +24,16 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
         FcApi.authenticateUser(delegateController: self, email: email, password: password)
     }
     
+    
+    @IBAction func signupBtnClicked(_ sender: Any) {
+        //send to registration
+        //let url = URL(fileURLWithPath: "http://www.google.ca")
+        UIApplication.shared.open(NSURL(string:"https://friend-club.herokuapp.com/users/sign_up")! as URL)//        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -101,43 +88,35 @@ class WelcomeViewController: UIViewController, FcApiProtocol {
     }
     
     func userAuthSuccess(email: String, token: String) {
-        print("\n\n\n\n\n\n ##########abab")
-        print(token)
         dataModel.setUserCreds(email: email, token: token)
         dataModel.deleteAllData()
         FcApi.fetchUserInfo(delegateController: self)
         FcApi.fetchUserPosts(delegateController: self)
         FcApi.fetchFriends(delegateController: self)
+        DispatchQueue.main.async {
+            let alertController = UIAlertController(title: "Login Success", message: "Click Enter to Continue", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     func userAuthFailed() {
-        
-        
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: "Login Failed", message: "Incorrect UserName or Password", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .`default`, handler: { _ in NSLog("The \"OK\" alert occured.")
             }))
             self.present(alertController, animated: true, completion: nil)
         }
-        //self.present(alertController, animated: true, completion: nil)
     }
     
     func setUser(user: jsonFriend) {
-       // dataModel.setCurrentUser()
-        
         dataModel.addJSONUser(user: user)
-        
         FcApi.fetchAvatarImage(urlString: dataModel.currentUser.avatarURLstr, friend: dataModel.currentUser)
-        
-        //
-        
         FcApi.fetchUserPosts(delegateController: self)
-        
-        
     }
     
     func setPostImage(friend: Friend, postNumber: Int, postImage: UIImage) {
         friend.posts[postNumber].image = postImage
     }
-    
 }

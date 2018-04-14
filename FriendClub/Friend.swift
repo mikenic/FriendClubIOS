@@ -2,7 +2,7 @@
 //  Friend.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by Michael Aubie on 2017-10-25.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
 

@@ -2,20 +2,16 @@
 //  AppDelegate.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by Michael Aubie on 2017-10-25.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import UIKit
 import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
-
     let dataModel = DataModel()
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         

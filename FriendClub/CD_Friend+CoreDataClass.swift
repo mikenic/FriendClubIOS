@@ -2,11 +2,10 @@
 //  CD_Friend+CoreDataClass.swift
 //  FriendClub
 //
-//  Created by IOSDev on 2017-10-29.
+//  Created by Michael Aubie on 2017-10-29.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
 //
-
 import Foundation
 import CoreData
 import UIKit
@@ -17,7 +16,6 @@ public class CD_Friend: NSManagedObject {
         self.firstName = newFriend.firstName
         self.lastName = newFriend.lastName
         self.email = newFriend.email
-        
         if(newFriend.avatar != nil) {
             self.avatar = (UIImageJPEGRepresentation(newFriend.avatar!, 1) as NSData?)
         }

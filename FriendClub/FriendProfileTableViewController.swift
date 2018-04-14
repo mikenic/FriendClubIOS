@@ -2,10 +2,9 @@
 //  FriendProfileTableViewController.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-27.
+//  Created by Michael Aubie on 2017-10-27.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import UIKit
 
 class FriendProfileTableViewController: UITableViewController {
@@ -23,7 +22,6 @@ class FriendProfileTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -45,76 +43,22 @@ class FriendProfileTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendProfile", for: indexPath)
             let friendNameText = cell.viewWithTag(1000) as!UILabel // 1000 = friend name
             friendNameText.text = currentFriend.firstName + " " + currentFriend.lastName
-            
-            let friendAvatar = cell.viewWithTag(2000) as! UIImageView
+            let friendAvatar = cell.viewWithTag(2000) as! UIImageView // 2000 = friend avatar
             friendAvatar.image = currentFriend.avatar
-            
-            let friendEmail = cell.viewWithTag(3000) as! UILabel
+            let friendEmail = cell.viewWithTag(3000) as! UILabel // 3000 = friend email
             friendEmail.text = currentFriend.email
-            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FriendPost", for: indexPath)
             let postTitle = cell.viewWithTag(1000) as!UILabel // 1000 = post title
             postTitle.text = currentFriend.posts[indexPath.row].title
-            
-            let postImage = cell.viewWithTag(2000) as! UIImageView
+            let postImage = cell.viewWithTag(2000) as! UIImageView // 2000 = post image
             postImage.image = currentFriend.posts[indexPath.row].image
-            
-            let postContent = cell.viewWithTag(3000) as! UITextView
+            let postContent = cell.viewWithTag(3000) as! UITextView // 3000 = friend content
             postContent.text = currentFriend.posts[indexPath.row].content
-            
-            let postDate = cell.viewWithTag(4000) as! UILabel
+            let postDate = cell.viewWithTag(4000) as! UILabel // 4000 = post date
             postDate.text = currentFriend.posts[indexPath.row].dateCreated.description
-            
             return cell
         }
     }
- 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

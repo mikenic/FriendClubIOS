@@ -2,41 +2,25 @@
 //  MyPostsTableViewController.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-26.
+//  Created by Michael Aubie on 2017-10-26.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import UIKit
 import CoreLocation
 
 class MyPostsTableViewController: UITableViewController, NewPostViewControllerDelegate {
-    
     var myPosts:[Post] = []
     var currentUser:Friend!
     var dataModel: DataModel!
-
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        //currentUser = dataModel.friendList[0]
-        //let newLocation = CLLocation()
-        //let newDate = Date()
-        //let myAvatar = UIImage()
-       
         currentUser = dataModel.currentUser
         currentUser.posts.map({ myPosts.append($0)})
         print("my posts = ", myPosts.count)
-    
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -64,7 +48,6 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
         //4000 = post date
         let postDate = cell.viewWithTag(4000) as! UILabel
         postDate.text = item.dateCreated.description
-        
         return cell
     }
     
@@ -92,14 +75,11 @@ class MyPostsTableViewController: UITableViewController, NewPostViewControllerDe
        
     func newPostViewController(_ controller: NewPostViewController, didFinishAdding post: Post) {
         let newRowIndex = myPosts.count
-       // dataModel.addPost(newPost: post, friend: getCurrentUser())
         dataModel.addUserPost(newPost: post, user: getCurrentUser())
         myPosts.append(post)
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
         tableView.insertRows(at: indexPaths, with: .automatic)
-        
-        /////////////////////////////////////////
         FcApi.sendNewPost(post: post)
     }
     

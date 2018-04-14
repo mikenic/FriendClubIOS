@@ -2,14 +2,12 @@
 //  Post.swift
 //  FriendClub
 //
-//  Created by vm mac on 2017-10-25.
+//  Created by Michael Aubie on 2017-10-25.
 //  Copyright © 2017 Michael Aubie. All rights reserved.
 //
-
 import Foundation
 import CoreLocation
 import UIKit
-
 
 class Post: NSObject {
     var title = ""
@@ -19,7 +17,6 @@ class Post: NSObject {
     var imageURLstr = ""
     var createdBy = 999
     var dateCreated = Date()
-    
     
     init(title: String,  content: String, location: CLLocation, image: UIImage,
          imageURLstr: String, createdBy:Int, dateCreated: Date) {
